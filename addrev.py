@@ -1,40 +1,34 @@
+import math
 
 n = int(input()) 
+resp = []
 
-result = []
-aux = []
+def addrev(t:int)->int: 
+	k = math.ceil( math.log10(t) ) 
+	rv = 0
+	u = t
 
-def addrev(rev:int)->int: 
-	b = True
-	array = [] 
-	while b == True: 
-		if rev//10 != 0:
-			array.append(rev%10)
-		if rev//10 == 0 : 
-			array.append(rev) 
-			b = False
-		rev=rev//10
-	flush(array) 
+	if t != 10**k : 
+		k = k -1 
+	else: 
+		return t//10**k
+
+	if k == 0: 
+		return t 
+	else: 
+		while k != 0: 
+			rv = rv + (u%10)*10**k 
+			u = u//10
+			k = k - 1
+			
+		return rv + u
+			
+for i in range(n):  
+	arr = input().split()
+	t1 = addrev( int(arr[0]) ) 
+	t2 = addrev( int(arr[1]) ) 
+	resp.append( addrev( t1 + t2 ) )
 	
-	return sum( array[len(array)-1-i]*10**i for i in range(len(array)) ) 
-
-def flush(k : list) : 
-	while k[0] == 0: 
-		k.pop(0) 
-	while k[len(k)-1] == 0: 
-		k.pop(len(k)-1) 
-
 	
-for x in range(n): 
-	aux = input().split()
-	t1 = addrev(int(aux[0]))
-	t2 = addrev(int(aux[1])) 
-	tot = t1 + t2
-	
-	naux = tot.split()
-	result.append( str(tot) ) 	
-
-for x in range(n): print(result[x]) 
-
-		
+for i in resp: print(i) 
 	
