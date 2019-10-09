@@ -2,31 +2,33 @@
 #include<iostream> 
 #include<string> 
 #include<math.h>
-#include<queue>
+#include<bitset>
+#include<vector>
+#include<iterator>
 	
 using namespace std; 
 
-queue<int> sieveModif(int n, int l_bound); 
+vector<unsigned int> sieveModif(long n, long l_bound); 
 
 int main() 
 {
 	int t;
 	cin>>t; 
-	queue<int> resp[t]; 	// it is either this array (whose allocation i'm unable to calculate yet)
-	long a, b;
+	vector<unsigned int> resp[t]; 	
 
+	long a, b;
 	for (int i=0; i<t; i++) {
 		cin>>a; 
 		cin>>b; 
 		resp[i]  = sieveModif(b, a);
 	}
 		 
+
 	for (int j=0; j<t; j++) {
 		
-		while( !resp[j].empty() )
+		for (vector<unsigned int>::iterator it = resp[j].begin(); it!=resp[j].end(); it++) 
 		{
-			cout<<resp[j].front()<<endl; 
-			resp[j].pop(); 
+			cout<<*it<<endl; 
 		}	
 	
 		if (j != t-1) 
@@ -38,36 +40,35 @@ int main()
 	return 0; 
 }
 
-queue<int> sieveModif(int n, int l_bound){ 
+vector<unsigned int> sieveModif(long n, long l_bound){ 
 	
-	queue<int> primes; 
-	int arr[n+1];
+	bitset<1000000001> bithelp; 
+	vector<unsigned int> primes; 
+	primes.resize(n-l_bound+1); 
 
-	for (int i=0; i<n+1; i++) {
-		arr[i] = i; 	
-	}
-	
-	arr[0] = arr[1] = -1; 
+	bithelp[0] = bithelp[1] = 1; 
 
 	int j = 2;
 	while (	j <= sqrt(n) ) { 
 
 		int k = 2; 
-		while ( j*k <= n ) { 
-			arr[j*k] = -1; 
-			k++; 
-		}
-		
+		if (bithelp[j] != 1)
+		{
+			while ( j*k <= n ) { 
+				bithelp[j*k] = 1; 
+				k++; 
+			}
+		}		
 		j++;
 	}
 
-	for (int l=l_bound; l<n+1; l++) { 
+	for (unsigned int l=l_bound; l<n+1; l++) { 
 		
-		if (arr[l] != -1) 
+		if (bithelp[l] != 1) 
 			{
-				primes.push(arr[l]);				
+				primes.push_back(l); 				
 			}
 	}
 	
-	return primes;
+	return primes; 
 }

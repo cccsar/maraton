@@ -1,19 +1,44 @@
-
 #include<iostream> 
-#include<string>
-#include<stdio.h> 
-#include<algorithm> 
+#include<string> 
+#include<vector>
 
 using namespace std; 
 
-	
+#define NUM 5 
 
 int main() 
 {
-	unsigned int c;
-	cin>>c; 
-	int arr[c]; 
-	cout<<sizeof(arr)<<" bytes"<<endl; 	
-	return 0; 
+	vector<int> a; 
+	int b ;
+
+	for (int i=0; i<NUM; i++) { 
+		cin>>b;
+		a.push_back(b);
+	}
+
+	for(int x:a)
+		cout<<x<<endl;
+
+	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

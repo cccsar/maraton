@@ -10,7 +10,7 @@ http://www.spoj.com/problems/EGYPIZZA/ 		done(cpp)
 
 http://www.spoj.com/problems/ADDREV/ 		done(cpp)
 
-http://www.spoj.com/problems/CANDY/		WA 
+http://www.spoj.com/problems/CANDY/		done(cpp) 
 
 http://www.spoj.com/problems/HANGOVER/ 		done(cpp)
 
@@ -27,7 +27,7 @@ http://www.spoj.com/problems/CANTON/ 		done(cpp)
 
 /-- DP --/ 
 
-http://spoj.com/problems/FARIDA/
+http://spoj.com/problems/FARIDA/		done(cpp)
 
 http://www.spoj.com/problems/PIGBANK/
 
@@ -88,7 +88,7 @@ http://www.spoj.com/problems/WEBISL/
 /-- Other lists --/
 
 
-http://www.spoj.com/problems/KGSS/
+http://www.spoj.com/problems/KGSS/ 			TLE (for search and queu imp, probably have to deduce segment tree)
 http://www.spoj.com/problems/GSS1/
 http://www.spoj.com/problems/GSS3/
 
@@ -99,13 +99,16 @@ http://codeforces.com/problemset/problem/510/C
 http://codeforces.com/problemset/problem/274/A
 https://icpcarchive.ecs.baylor.edu/index.php?option=onlinejudge&page=show_problem&problem=2978
 http://acm.tju.edu.cn/toj/showp1633.html
-
-
 https://icpcarchive.ecs.baylor.edu/index.php?option=onlinejudge&page=show_problem&problem=4849
-https://icpcarchive.ecs.baylor.edu/index.php?option=onlinejudge&page=show_problem&problem=4819
 http://www.spoj.com/problems/HELPBOB/
 
 /-- personal --/ 
 
 https://www.spoj.com/problems/PRIME1/ 			TLE (segmentation fault) 
-http://codeforces.com/problemset/problem/1186/C
+http://codeforces.com/problemset/problem/1186/C		vus the cossack and strings - TLE (needs sme fucking savant refinement)
+http://codeforces.com/problemset/problem/1189/B		Number Circle
+http://codeforces.com/problemset/problem/1189/A		Keanu Reeves 	- done(cpp)
+http://codeforces.com/problemset/problem/1023/B		pair of toys 	- done(cpp)
+http://codeforces.com/contest/1066/problem/C		books queries	- done(cpp)
+https://www.spoj.com/problems/KNAPSACK/			WA - needs better dp approach (both greedy, and pushing maximum failed)
+https://www.spoj.com/problems/LCS/
