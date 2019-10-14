@@ -1,4 +1,9 @@
 #include<iostream> 
+
+#define FOR(n) for(int i=0; i<n; i++) 
+#define ROF(n) for(int i=n; i>0; i--) 
+#define rint(c) scanf("%d",c)
+#define rints(c,cc) scanf("%d %d, &c, &cc)
 	
 using namespace std; 
 

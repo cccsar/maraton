@@ -1,0 +1,39 @@
+
+#include <iostream> 
+#include <vector> 
+#include <list> 
+#include <utility>
+
+#define FOR(n) for(int i=0; i<n; i++) 
+#define ROF(n) for(int i=n; i>0; i--) 
+#define rint(c) scanf("%d",&c)
+#define rints(c,cc) scanf("%d %d",&c,&cc)
+
+#define MAX_NODES 30000
+#define MAX_ADY 100
+
+using namespace std; 
+
+typedef vector< list<int> > ady_l ;
+typedef pair< list<int>::iterator, list<int>::iterator > itpr; 
+//ady_l perico[MAX_NODES][MAX_ADY];
+
+int main() 
+{
+	int nc, tc; 
+	rints(nc,tc); 	
+	ady_l perico; 
+	perico.resize(nc);
+
+	perico[0].push_back(5); 
+
+	//perico.at(0).push_back(2);
+	/*
+	list<int> hola, como;
+	list<int>::iterator it1, it2;
+	itpr tortuga;
+	tortuga.first = it1; 
+	tortuga.second = it2;
+	*/
+	return 0; 
+}
