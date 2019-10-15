@@ -3,9 +3,12 @@
 #include <deque> 
 #include <vector> 
 
-#define NODE_CEIL 100
-
 using namespace std; 
+
+#define NODE_CEIL 100
+//#define MAX_NODE 1000 
+//
+//typedef vector< vector<bool> > ady_may;
 
 deque<int> waiting; 
 vector<int> visited; 

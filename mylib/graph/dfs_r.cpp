@@ -6,18 +6,33 @@ using namespace std;
 
 #define FOR(n) for(int i=0; i<n; i++) 
 #define ROF(n) for(int i=n; i>0; i--) 
-#define BFOR(l,u) for(int i=l; i<u; i++) 
 #define rint(c) scanf("%d",&c)
 #define rints(c,cc) scanf("%d %d",&c,&cc)
 
+//type for adyacency list
 typedef vector< vector<int> > adyl ;
 
 
-#define MAX_NODES 30001
+#define MAX_NODES 30000
 
 adyl my_adyl(MAX_NODES);
 int parent[MAX_NODES];
 
+/*	Recovery of dfs paths	*/
+void path_print(int n) { 
+	int d; 
+
+	FOR(n) { 
+		d = i; 
+		while (d != parent[d] && parent[d] != -1) { 
+			cout<<d<<" "; 
+			d = parent[d]; 	
+		}
+		
+		if(parent[d]!=-1 || paren[d]==d)
+			cout<<parent[d]<<endl;
+	}
+}
 
 vector<int> getAdyacents(int current) {
 
@@ -25,7 +40,7 @@ vector<int> getAdyacents(int current) {
 }
 
 
-void dfsRec(int current) { 
+void dfs_r(int current) { 
 	
 	vector<int> ady;
 	int d;
@@ -38,7 +53,7 @@ void dfsRec(int current) {
 		if( parent[d] == -1 ) 
 		{ 
 			parent[d] = current; 
-			dfsRec(d); 
+			dfs_r(d); 
 		}
 	}
 		
@@ -46,32 +61,6 @@ void dfsRec(int current) {
 
 int main() 
 {
-	int nc, tc; 
-	rints(nc,tc);
-
-
-	FOR(nc) 
-		parent[i] = -1; 
-	parent[0] = 0;
-
-	int rng; 
-	FOR(nc-1) { 
-		rint(rng);
-		my_adyl[i].push_back(i+rng); 
-	}
-
-
-	dfsRec(0);
-	BFOR(1,nc)
-		dfsRec(i);
-
-
-	int d = tc-1;
-	while(d!=parent[d] && d!=-1)  
-		d = parent[d];
-
-	(d == 0)? printf("YES\n"): printf("NO\n");
-
 
 	return 0; 
 }
