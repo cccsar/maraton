@@ -1,36 +1,64 @@
 #include<iostream> 
+
+#define FOR(n) for(int i=0; i<n; i++) 
+#define ROF(n) for(int i=n; i>0; i--) 
+#define rint(c) scanf("%d",&c)
+#define rints(c,cc) scanf("%d %d", &c, &cc)
+#define rintt(c,cc,ccc) scanf("%d %d %d", &c, &cc, &ccc)
 	
 using namespace std; 
 
-#define MAX_ARR_SIZE 100
+#define MAX_QUERIES 100
 
-int t, st[MAX_ARR_SIZE], in[MAX_ARR_SIZE], ex[MAX_ARR_SIZE], resp[MAX_ARR_SIZE];
+int resp[MAX_QUERIES];
+
+
+int pairBS(int str, int intg, int exp) { 
+	int a,b,c, count; 
+	a = str + exp; 
+	b = intg;
+	c = exp+1 ;
+	
+	cout<<"a: "<<a<<" b: "<<b<<endl;
+	while (a>b+1 || a<b-1) {
+
+		c /= 2;
+		if(a>b) { 
+			a -= c; 
+			b += c; 
+		}
+		else { 
+			a += c; 
+			b -= c; 
+		}
+		cout<<"a: "<<a<<" b: "<<b<<endl;
+	}
+
+	return (a == b)? str+exp-a: str+exp-max(a,b)+1 ;
+
+}
 
 int main() 
 {
-	cin>>t; 
-	int i;
-	for (i=0; i<t; i++) 
-		cin>>st[i]>>in[i]>>ex[i];
-
-	int j, a, b, count; 
-	for (j=0; j<t; j++) {
+	int nq, str, intg, exp;
 	
-		count = 0; 
-		a = st[j] + ex[j]; 
-		b = in[j] ;
-		while (a>in[j] && b<st[j]+ex[j] && a>b) {
-			a--;
-			b++;
-			count++; 
-		}
+	rint(nq); 
 
-		resp[j] = count; 
+	FOR(nq) { 
+		rintt(str, intg, exp); 
+
+		if (str > intg)  {
+			resp[i] = (intg + exp < str)? exp + 1: pairBS(str, intg, exp) ;
+		}
+		else if (str == intg)  
+			resp[i] = (exp+1)/2;
+		else  
+			resp[i] = (str+exp>intg)? pairBS(str, intg, exp): 0; 
+		
 	}
 
-	int k; 
-	for(k=0; k<t; k++) 
-		cout<<resp[k]<<endl; 
+	FOR(nq) 
+		cout<<resp[i]<<endl;
 
 	return 0; 
 }
