@@ -7,6 +7,11 @@
 
 
 
+void cat(FILE *fd) {
+	
+	
+
+}
 //tal vez serviria empilar o encolar los DIR* en una estructura para recorrerlo
 void dirTraverse(DIR *dir, char *dirname) { 
 
@@ -16,31 +21,34 @@ void dirTraverse(DIR *dir, char *dirname) {
 
 	strcpy(path,dirname); 
 
+	//primer print
+
 	while( (current_ent=readdir(dir)) != NULL ) { 
 
 		if( strcmp(current_ent->d_name,".")!=0 && strcmp(current_ent->d_name,"..")!=0) 
 		{
-			printf("nombre: %s\n",current_ent->d_name); 
+			// primer guardado de path; 
+			char first_current_name[256], buffer[256];	//fcn,modificacion de path sobre la marcha
+			strcpy(first_current_name, path); 		//temp de fcn
+			strcpy(buffer, first_current_name); 
+
+			strcat(first_current_name,"/"); 
+			strcat(first_current_name, current_ent->d_name);	//modifico fcn 
+			printf("%s\n",first_current_name); 
 
 			if (current_ent->d_type == DT_DIR )  
 			{ 
-				char current_name[256]; 
-				strcat(current_name, path); 
-
-				strcat(path,"/"); 
-				strcat(path, current_ent->d_name); 
-
-				printf("%s\n", path); 
-
-				if ((ith_pointer = opendir(path)) == NULL )  
+				
+				if ((ith_pointer = opendir(first_current_name)) == NULL )  //Cierro directorio	
 					perror("opendir");
 
-				dirTraverse(ith_pointer, path); 
-				strcat(path,current_name); 
+				dirTraverse(ith_pointer, first_current_name); //esta llamada cambia fcn
+				strcpy(first_current_name, buffer);		//esto recupera fcn, con el temp en buffer ;
 			}
+			
 		}
 	}
-	closedir(ith_pointer); 
+	closedir(ith_pointer); 								//abro directorio
 }
 int main (int argc, char **argv) { 
 	
@@ -59,16 +67,7 @@ int main (int argc, char **argv) {
 	}
 
 	dirTraverse(dir, argv[1]); 
-	/*
-	while( (dir_ent=readdir(dir)) != NULL ) { 
-		printf("nombre: %s\n",dir_ent->d_name);
-		printf("inodo: %ld\n",dir_ent->d_ino);
-		printf("offset: %ld\n",dir_ent->d_off);
-		printf("record lenght: %d\n",dir_ent->d_reclen);
-		printf("type of file: %d\n",dir_ent->d_type);
-		printf("\n");
-	}
-	*/	
+
 	closedir(dir); 
 		
 	exit(0);	
