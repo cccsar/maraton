@@ -5,6 +5,11 @@
 #include<string>
 #include<algorithm> 
 
+#define TOO_BIG 100000000
+//Apparently this shit can go all the way with no O(something) of memory
+
+int arr[TOO_BIG]; 
+
 using namespace std; 
 
 void sieve(int sect[], int n) { 
@@ -32,11 +37,10 @@ void sieve(int sect[], int n) {
 
 }
 
-int main() { 
+int main(int argc, char** argv) { 
 	int a;
-	cin>>a;
-	int arr[a+1];
-	sieve(arr,a); 
+	a = atoi(argv[1]); 
+	sieve(arr, a); 
 	
 	for (int k=2; k<a+1; k++) {
 		
