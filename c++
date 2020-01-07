@@ -151,7 +151,12 @@ Modifiers:
 
 
 /-- Set --/ #include<set> : as a regular set, all elements are different, and this is an implementation of an ordered set.  
-It is oddly declared like this: set < typename, greater/less <typename> >
+It is oddly declared like this: 
+	set < typename > 
+	set < typename, greater/less <typename> >
+
+	It is interally implemented as a binary search tree. Default is increasing order (with less**) -> see Priority Queue
+
 	In my torough search for knowlege, I discovered that greater/less identifier represent the type of order stablished in the set, hence, if one wants a set ordered increasingly, one much choose less so the smallest elements is placed first.
 
 Iterators: 
@@ -221,8 +226,15 @@ Cool operatrions:
 
 
 /-- Priority Queue --/ #include <queue> ... priority_queue<typename> 
+	priority_queue < typename > 
+	priority_queue < typename, [vector, queue]<typename>, [greater,*less*]<typename> > 
+
+	It is internally implemented as a heap. Default max heap (with less**) -> See Set
+	//With pair orders according to "first" field//  
 
 It's odd to make an statement about this cause it encompasses sort of advance OOP in C++, but the idea is that some underlying container class template that support some operations (alongside with other requirements.. we're getting chessy), serve as a base for this structure. And of course, the behaviour is that we already know of a (greater) priority queue, implemented as a "max binary heap"
+
+
 
 Capacity:
 	size()->int		empty()->bool 		
@@ -253,7 +265,7 @@ And yes, that's all what is to it. It might have some non-interesting features s
 This structure incorporates all possible functions from vector, besides, in their documentation is emphasis on how the doubly linked list implementation causes linear time insertion and deletion and better performance when searching. Additionaly, their set to be located at not necessarily contiguous memory positions, but after some tests.. every object seems to be after the other.
 
 Iterators: 
-	begin()->it		end()->int		rbegin()->r_it		rend()->r_it
+	begin()->it		end()->it		rbegin()->r_it		rend()->r_it
 
 Capacity: 
 	empty()->bool 		size()->int		max_size()->int
@@ -268,6 +280,31 @@ Modifiers:
 /- comments: 
 	-insert takes an iterator representing the place at the list where one wishes to insert the element. There are different ways of using this. 
 	-sorting it is a pain in the ass... well not quite, but I don't yet understand it. 
+
+/--Unordered Map--/ : #include <unordered_map> 
+
+Iterators: 
+	begin()->it		end()->it
+
+Capacity: 
+	empty()->bool 		size()->int 		max_size()->int
+
+Element acces: 
+	[] -> mapped_value	
+
+Modifiers: 
+	insert(pair<typename,typename>)->#
+
+Element lookup: 
+	count(typename)->(1|0)		find(typename)->it	
+
+Associative container implemented as a hash function, hence highly efficient for element retrieval (this contrast with
+maps, implemented as binary search trees). 
+
+/-comments: 
+	-Since maps don't allow repeated keys, count either returns 1 or 0. This is, either the element is contained or not. 
+	-insert() seems misterious	
+
 
 
 **Juicy library with cool functions: 
@@ -291,7 +328,7 @@ It turns out that there's is a rational order for all of this "structures"<-actu
 		queue	priority_queue	stack
 
 	Associative containters: Implement sorted DS that can be searched in O(log(n)).
-		set	multiset	mat	multimap
+		set	multiset	map	multimap
 	
 	Unordered Associative containers: Unordered DS that can be quickly searched.
 		unordered_set	unordered_multiset	unordered_map	unordered_multimap

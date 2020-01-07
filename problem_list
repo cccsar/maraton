@@ -1,10 +1,10 @@
 /-- startup --/ 
 
-http://www.spoj.com/problems/NSTEPS/ 		done(cpp)	
+http://www.spoj.com/problems/NSTEPS/ 		done(cpp)	done (hs) lacks I/O
 
 http://www.spoj.com/problems/OFFSIDE/ 		done(cpp)
 
-http://www.spoj.com/problems/ACPC10A/ 		done(cpp)
+http://www.spoj.com/problems/ACPC10A/ 		done(cpp) 	done (hs) lacks I/O
 
 http://www.spoj.com/problems/EGYPIZZA/ 		done(cpp)
 
@@ -54,11 +54,11 @@ http://www.spoj.com/problems/ASSIGN/
 
 /-- GRAPHS --/ 
 
-http://www.spoj.com/problems/CAM5/               
+http://www.spoj.com/problems/CAM5/               done (cpp)
 
-http://www.spoj.com/problems/SHPATH/
+http://www.spoj.com/problems/SHPATH/ 
 
-http://www.spoj.com/problems/PT07Y/             
+http://www.spoj.com/problems/PT07Y/             done(cpp)
 
 http://www.spoj.com/problems/ALLIZWEL/       
 
