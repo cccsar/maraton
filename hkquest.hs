@@ -32,7 +32,25 @@ myLength' :: [a] -> Int
 myLength' = foldr (\x acc -> acc + 1) 0
 
 --p5
+
 myReverse :: [a] -> [a] 
 myReverse [] = [] 
-myReverse [x] = x
-myReverse (x:xs) = myReverse xs : [x]
+myReverse (x:xs) = myReverse xs ++ [x] --this is ugly
+
+--p6
+
+isPalindrome :: (Eq a) => [a] -> Bool 
+isPalindrome [] = error "empty list" 
+isPalindrome xs 
+	| xs == myReverse xs = True
+	| otherwise = False --this is also ugly
+
+--p7 
+
+data NestedList a = Elem a | List [NestedList a]
+
+
+flatten :: NestedList a -> [a]  
+flatten (Elem x) = x  
+flatten List (x:xs) 
+	|
