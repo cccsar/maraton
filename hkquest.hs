@@ -41,8 +41,8 @@ myReverse (x:xs) = myReverse xs ++ [x] --this is ugly
 
 isPalindrome :: (Eq a) => [a] -> Bool 
 isPalindrome [] = error "empty list" 
-isPalindrome xs 
-	| xs == myReverse xs = True
+isPalindrome x 
+	| x == myReverse x = True
 	| otherwise = False --this is also ugly
 
 --p7 
@@ -50,7 +50,3 @@ isPalindrome xs
 data NestedList a = Elem a | List [NestedList a]
 
 
-flatten :: NestedList a -> [a]  
-flatten (Elem x) = x  
-flatten List (x:xs) 
-	|

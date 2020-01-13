@@ -57,8 +57,7 @@ int main()
 
 	for(i_=0; i_< t ; i_++) {
 
-		ri(n); 
-		ri(e); 
+		rii(n, e);
 		for(j_=0; j_< e ; j_++) {
 
 			rii(u_, v_); 	
