@@ -49,4 +49,7 @@ isPalindrome x
 
 data NestedList a = Elem a | List [NestedList a]
 
+foo:: NestedList a -> [a] 
+foo (Elem a) = [a] 
+foo (List a) = (foo $ head a) ++ (foo $ tail a )  
 
