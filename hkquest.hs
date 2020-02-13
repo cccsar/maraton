@@ -49,13 +49,18 @@ isPalindrome x
 
 data NestedList a = Elem a | List [NestedList a]
 
-<<<<<<< HEAD
-foo:: NestedList a -> [a] 
-foo (Elem a) = [a] 
-foo (List a) = (foo $ head a) ++ (foo $ tail a )  
-=======
-flatten :: NestedList a -> [a]
-flatten (Elem x) = [x]
-flatten (List (x:xs)) = flatten x ++ flatten xs 
->>>>>>> cd902162618cecc8348f21c1271bdb33be1500e7
+--foo:: NestedList a -> [a] 
+--foo (Elem a) = [a] 
+--foo (List a) = (foo $ head a) ++ (foo $ tail a )  
+
+--flatten :: NestedList a -> [a]
+--flatten (Elem x) = [x]
+--flatten (List (x:xs)) = flatten x ++ flatten xs 
+
+myMergesort :: (Ord a) => [a] -> [a]
+myMergesort [] = []
+myMergesort (x:xs) = (myMergesort left) ++ [x] ++ (myMergesort right)
+	where 	left = filter (<x) xs
+		right = filter (>x) xs	
+
 
