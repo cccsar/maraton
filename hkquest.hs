@@ -49,13 +49,22 @@ isPalindrome x
 
 data NestedList a = Elem a | List [NestedList a]
 
-<<<<<<< HEAD
-foo:: NestedList a -> [a] 
-foo (Elem a) = [a] 
-foo (List a) = (foo $ head a) ++ (foo $ tail a )  
-=======
-flatten :: NestedList a -> [a]
-flatten (Elem x) = [x]
-flatten (List (x:xs)) = flatten x ++ flatten xs 
->>>>>>> cd902162618cecc8348f21c1271bdb33be1500e7
+--foo:: NestedList a -> [a] 
+--foo (Elem a) = [a] 
+--foo (List a) = (foo $ head a) ++ (foo $ tail a )  
+
+--flatten :: NestedList a -> [a]
+--flatten (Elem x) = [x]
+--flatten (List (x:xs)) = flatten x ++ flatten xs 
+
+
+myQuicksort :: (Ord a) => [a] -> [a] 
+myQuicksort (x:xs) = myQuicksort left ++ myQuicksort right 
+	where 
+		left = [a | a<-xs, a<=x] 
+		right = [a | a<-xs, a>x]
+--myQuicksort [x] = [x]
+myQuicksort [] = [] 
+
+
 
