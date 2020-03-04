@@ -8,6 +8,7 @@
 #include<queue>
 #include<utility>
 #include<climits> 
+#include<list>
 
 
 #define FOR(u,l) for(int i=l; i<u; i++) 
@@ -28,57 +29,15 @@
 	
 using namespace std; 
 
-int mex(vector<int> multiset, int *imp){ 
-	int resp, ref;
-	set<int> help; 
-	set<int>::iterator it; 
+int main() { 
+	int i_; 
+	list<int> hola; 
+	for(i_=0; i_<10 ; i_++) 
+		hola.push_front(i_); 	
 
-	resp = 0 ;
-
-	for(int i_: multiset) 
-		help.insert(i_); 
-
-	if ( help.size()  == 0)
-		return 0 ;
-	else {
-		ref = 0; 
-		//search for minimum excluded value
-		for (it = help.begin(); it!=help.end(); it++)  {
-
-			if (*it != ref) 
-				break ;
-			ref += 1;
-		}
-
-		//update number of colorations on maximum
-		if ( it == help.end()) {
-			resp = ref 
-		}
-		else
-			resp = *it -1; 
-
-		if( resp > *imp)
-			*imp = resp;
-		return resp ;	
-		
-	}
-}
-
-int main() 
-{
-	int i_, imp, n, e, aux; 
-	vector<int> aiuda; 
-
-	ri(n); 
-	aux = 0 ;
-	for(i_=0; i_<n ; i_++) {
-		ri(e);
-		aiuda.push_back(e);
-	}	
-
-	cout<<mex(aiuda, &aux)<<endl; 
-       	cout<<aux<<endl; 
+	for(int i : hola )   
+		cout<<i<<" "; 	
+	cout<<endl; 
 
 	return 0; 
 }
-
