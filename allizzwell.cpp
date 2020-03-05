@@ -8,6 +8,7 @@
 #include<queue>
 #include<utility>
 #include<climits> 
+#include<unordered_map>
 
 using namespace std; 
 
@@ -30,10 +31,13 @@ typedef vector< vii > wadl;
 const int TCASES = 1000;
 const int MATMAX = 100;
 const int WSIZE = 10; 
+const int SSIZE = 6; 
+
+const char* ALLIZZWELL = "ALLIZZWELL";
+const char* WORD = "AEILWZ";
 
 bool resp[TCASES];
 char letters[MATMAX][MATMAX];
-const char* ALLIZZWELL = "ALLIZZWELL";
 
 void successors(vector< vector< bool > > visited, vii &suc,  int i, int j , int height, int width) { 
 	pi help;
@@ -83,7 +87,7 @@ void successors(vector< vector< bool > > visited, vii &suc,  int i, int j , int 
 }
 
 
-bool traversing(vector< vector< bool> > visited, int i, int j, int height, int width, int index) { 
+bool traversing(vector< vector< bool> > visited, int i, int j, int height, int width, const int index) { 
 	vii surr; 
 	bool guard; 
 	int j_, k_; 
@@ -115,23 +119,52 @@ bool traversing(vector< vector< bool> > visited, int i, int j, int height, int w
 }
 
 
+void setUpdate(unordered_map<char, int> &letter_set, char letter){
+
+	if ( letter_set.count( letter ) != 0 )  
+		letter_set[ letter ] += 1;
+}
+	
+
+bool setCheck(unordered_map<char, int> letter_set) { 
+	
+	for(pair<char, int> k: letter_set ) { 
+		if ( k.first == 'Z' ) {
+			if ( k.second < 2 ) 
+				return false; 
+		}
+		else if ( k.first == 'L' ) { 
+			if ( k.second < 4 ) 
+				return false; 
+		}
+		else if ( k.second == 0 ) {
+		       return false; 
+		}	       
+	}
+
+	return true; 
+}
+
+
 int main() 
 {
 	int t, r, c, i_, j_, k_; 
 	char letra[MATMAX]; 
 	vector< vector<bool> > visited; 
-
+	unordered_map<char, int> letter_set; 
 	vii begins; 	
-	pi dummie; 
+	pi dummie, help; 
+
+
+	for(i_=0; i_<SSIZE ; i_++) 
+		letter_set[ WORD[i_] ] = 0; 
 
 	visited.resize(MATMAX); 
-	for(i_=0; i_< MATMAX ; i_++) {
+	for(i_=0; i_< MATMAX ; i_++) 
 		visited[i_].resize( MATMAX ) ;		
-	}	
 
 
 	ri(t); 
-
 	for (i_=0 ; i_<t ; i_++) { 
 
 		
@@ -142,6 +175,7 @@ int main()
 			for (k_=0 ; k_<c ; k_++) { 
 
 				letters[j_][k_] = letra[k_];
+				setUpdate(letter_set, letra[k_] ) ; 
 
 				if ( letra[k_] == 'A' ) { 
 					dummie.first = j_; 
@@ -153,15 +187,23 @@ int main()
 		}	
 
 
-		for(pi source : begins )  {
-			resp[i_] = traversing(visited, source.first, source.second, r, c, 1); 
-
-			if (resp[i_])
-				break; 		
-		}	
+		if ( !setCheck( letter_set ) ) {	//if not all letters then avoid traversing
+			resp[i_] = false; 
+		}
+		else {
+			for(pi source : begins )  {
+				resp[i_] = traversing(visited, source.first, source.second, r, c, 1); 
+	
+				if (resp[i_])
+					break; 		
+			}	
+		}
 
 
 		begins.clear(); 	
+		for(j_=0; j_<SSIZE ; j_++) 
+			letter_set[ WORD[j_] ] = 0; 
+
 	}
 
 
