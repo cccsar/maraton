@@ -11,7 +11,7 @@
 
 using namespace std; 
 
-#define FOR(u,l) for(int i=l; i<u; i++) 
+#define FOR(i ,u ,l) for(i=l; i<u; i++) 
 #define ROF(l,u) for(int i=u; i>l-1; i--) 
 #define ri(c) scanf("%d",&c)
 #define rii(c,cc) scanf("%d %d", &c, &cc)
@@ -35,46 +35,46 @@ bool resp[TCASES];
 char letters[MATMAX][MATMAX];
 const char* ALLIZZWELL = "ALLIZZWELL";
 
-void successors(vii &suc,  int i, int j , int width, int height) { 
+void successors(vector< vector< bool > > visited, vii &suc,  int i, int j , int height, int width) { 
 	pi help;
 
-	if ( i != 0 ) { 
+	if ( i != 0 && !visited[i-1][j]) { 
 		help.first = i-1; 
 		help.second = j;  
 		suc.push_back( help ) ; 
 	}
-	if ( i != height - 1 )   {
+	if ( i != height - 1 && !visited[i+1][j])   {
 		help.first = i + 1 ;
 		help.second = j; 
 		suc.push_back( help );
 	}
-	if ( j != 0 ) {
+	if ( j != 0 && !visited[i][j-1]) {
 		help.first = i; 
 		help.second = j - 1;
 		suc.push_back( help ); 
 	}
-	if ( j != width - 1 ) { 
+	if ( j != width - 1 && !visited[i][j+1]) { 
 		help.first = i ; 
 		help.second = j + 1;
 		suc.push_back( help );
 	}
 
-	if( i != 0 && j != 0 ) {
+	if( i != 0 && j != 0 && !visited[i-1][j-1]) {
 		help.first = i-1; 
 		help.second = j-1; 
 		suc.push_back( help );
 	}
-	if( i != 0 && j != width - 1)  {
+	if( i != 0 && j != width - 1 && !visited[i-1][j+1])  {
 		help.first = i - 1;
 		help.second = j + 1;
 		suc.push_back( help ); 
 	}
-	if( i != height - 1 && j != 0 ) {
+	if( i != height - 1 && j != 0 && !visited[j+1][j-1]) {
 		help.first = i + 1;
 		help.second = j - 1;
 		suc.push_back( help );
 	}
-	if ( i!= height - 1 && j != width - 1){
+	if ( i!= height - 1 && j != width - 1 && !visited[i+1][j+1]){
 		help.first = i + 1;
 		help.second = j + 1;
 		suc.push_back( help );
@@ -83,19 +83,19 @@ void successors(vii &suc,  int i, int j , int width, int height) {
 }
 
 
-bool traversing(int i, int j, int height, int width, int index) { 
+bool traversing(vector< vector< bool> > visited, int i, int j, int height, int width, int index) { 
 	vii surr; 
 	bool guard; 
+	int j_, k_; 
 
 	guard = false; 
 
-	successors(surr, i, j, height, width); 
-
+	successors(visited, surr, i, j, height, width); 
+	
 	for(pi succ: surr ) { 
-		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {  
+		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {
 
-			cout<<letters[ succ.first ][ succ.second ]<<" "<<ALLIZZWELL[ index ] ;
-			//cout<<succ.first<<" "<<succ.second<<endl;
+			visited[ succ.first ][ succ.second ] = true; 
 			//if letter equals following, then if not the last, call to check
 			//	next letter with new matrix indexes
 			//otherwise 
@@ -103,12 +103,11 @@ bool traversing(int i, int j, int height, int width, int index) {
 			if ( index == WSIZE - 1)
 				return true; 
 
-			guard = traversing( succ.first, succ.second, height, width, index + 1); 	
+			guard = traversing(visited, succ.first, succ.second, height, width, index + 1); 	
 
 			if ( guard ) 	//if the call returned true, skip traverse
 				break; 
 		}
-		cout<<endl;
 	}
 
 	return guard; 
@@ -120,15 +119,22 @@ int main()
 {
 	int t, r, c, i_, j_, k_; 
 	char letra[MATMAX]; 
+	vector< vector<bool> > visited; 
+
 	vii begins; 	
 	pi dummie; 
 
+	visited.resize(MATMAX); 
+	for(i_=0; i_< MATMAX ; i_++) {
+		visited[i_].resize( MATMAX ) ;		
+	}	
 
 
 	ri(t); 
 
 	for (i_=0 ; i_<t ; i_++) { 
 
+		
 		rii(r, c);		
 		for (j_=0 ; j_<r ; j_++) { 
 
@@ -146,26 +152,22 @@ int main()
 			}	
 		}	
 
-		//for(j_=0; j_<r ; j_++) {
-		//	for(k_=0; k_<c ; k_++) {
-		//		cout<<letters[j_][k_]; 
-		//	}		
-		//	cout<<endl; 
-		//}
 
 		for(pi source : begins )  {
-			resp[i_] = traversing(source.first, source.second, r, c, 1); 
+			resp[i_] = traversing(visited, source.first, source.second, r, c, 1); 
 
 			if (resp[i_])
 				break; 		
 		}	
 
 
-		begins.clear(); 	//clear pair vect
+		begins.clear(); 	
 	}
 
+
 	for(i_=0; i_<t ; i_++) 
-		(resp[i_])? cout<<"YES"<<endl : cout<<"NOT"<<endl; 	
+		(resp[i_])? cout<<"YES"<<endl : cout<<"NO"<<endl; 	
 	
+
 	return 0; 
 }
