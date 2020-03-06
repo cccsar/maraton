@@ -19,13 +19,13 @@ using namespace std;
 #define riii(c,cc,ccc) scanf("%d %d %d", &c, &cc, &ccc)
 #define rw(s) scanf("%s",&s)
 
-typedef vector< int > vi; 
-typedef vector< pair<int, int> >  vii; 
-typedef vector< int, pair<int, int> >viii; 
 typedef pair <int, int> pi; 
 typedef pair <int, pair<int, int> > pii; 
-typedef vector< vi > adl; 
-typedef vector< vii > wadl; 
+typedef vector< int > vi; 
+typedef vector< pi > vii; 
+typedef vector< pii > viii; 
+typedef vector< pi > *adl; 
+typedef vector< pii > *wadl; 
 
 
 const int TCASES = 1000;
@@ -37,48 +37,49 @@ const char* ALLIZZWELL = "ALLIZZWELL";
 const char* WORD = "AEILWZ";
 
 bool resp[TCASES];
+bool vtd[MATMAX][MATMAX];
 char letters[MATMAX][MATMAX];
 
-void successors(vector< vector< bool > > visited, vii &suc,  int i, int j , int height, int width) { 
+void successors(vii &suc,  int i, int j , int height, int width) { 
 	pi help;
 
-	if ( i != 0 && !visited[i-1][j]) { 
+	if ( i != 0 && !vtd[i-1][j]) { 
 		help.first = i-1; 
 		help.second = j;  
 		suc.push_back( help ) ; 
 	}
-	if ( i != height - 1 && !visited[i+1][j])   {
+	if ( i != height - 1 && !vtd[i+1][j])   {
 		help.first = i + 1 ;
 		help.second = j; 
 		suc.push_back( help );
 	}
-	if ( j != 0 && !visited[i][j-1]) {
+	if ( j != 0 && !vtd[i][j-1]) {
 		help.first = i; 
 		help.second = j - 1;
 		suc.push_back( help ); 
 	}
-	if ( j != width - 1 && !visited[i][j+1]) { 
+	if ( j != width - 1 && !vtd[i][j+1]) { 
 		help.first = i ; 
 		help.second = j + 1;
 		suc.push_back( help );
 	}
 
-	if( i != 0 && j != 0 && !visited[i-1][j-1]) {
+	if( i != 0 && j != 0 && !vtd[i-1][j-1]) {
 		help.first = i-1; 
 		help.second = j-1; 
 		suc.push_back( help );
 	}
-	if( i != 0 && j != width - 1 && !visited[i-1][j+1])  {
+	if( i != 0 && j != width - 1 && !vtd[i-1][j+1])  {
 		help.first = i - 1;
 		help.second = j + 1;
 		suc.push_back( help ); 
 	}
-	if( i != height - 1 && j != 0 && !visited[j+1][j-1]) {
+	if( i != height - 1 && j != 0 && !vtd[j+1][j-1]) {
 		help.first = i + 1;
 		help.second = j - 1;
 		suc.push_back( help );
 	}
-	if ( i!= height - 1 && j != width - 1 && !visited[i+1][j+1]){
+	if ( i!= height - 1 && j != width - 1 && !vtd[i+1][j+1]){
 		help.first = i + 1;
 		help.second = j + 1;
 		suc.push_back( help );
@@ -87,44 +88,38 @@ void successors(vector< vector< bool > > visited, vii &suc,  int i, int j , int 
 }
 
 
-bool traversing(vector< vector< bool> > visited, int i, int j, int height, int width, const int index) { 
-	vii surr; 
+bool traversing(int i, int j, int height, int width, const int index) { 
 	bool guard; 
-	int j_, k_; 
+	vii surr, visited; 
 
 	guard = false; 
 
-	successors(visited, surr, i, j, height, width); 
+	successors(surr, i, j, height, width); 
 	
 	for(pi succ: surr ) { 
 		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {
 
-			visited[ succ.first ][ succ.second ] = true; 
-			//if letter equals following, then if not the last, call to check
-			//	next letter with new matrix indexes
-			//otherwise 
-			//	return true 
+			visited.push_back(succ);
+			vtd[ succ.first ][ succ.second ] = true; 
+
 			if ( index == WSIZE - 1)
 				return true; 
 
-			guard = traversing(visited, succ.first, succ.second, height, width, index + 1); 	
+			guard = traversing(succ.first, succ.second, height, width, index + 1); 	
 
 			if ( guard ) 	//if the call returned true, skip traverse
 				break; 
+
 		}
 	}
+	
+	for( pi dot : visited ) 
+		vtd[ dot.first ][ dot.second ] = false; 
 
 	return guard; 
-
 }
 
 
-void setUpdate(unordered_map<char, int> &letter_set, char letter){
-
-	if ( letter_set.count( letter ) != 0 )  
-		letter_set[ letter ] += 1;
-}
-	
 
 bool setCheck(unordered_map<char, int> letter_set) { 
 	
@@ -165,17 +160,18 @@ int main()
 
 
 	ri(t); 
-	for (i_=0 ; i_<t ; i_++) { 
+	for (i_=0 ; i_<t ; i_++) {
 
 		
 		rii(r, c);		
-		for (j_=0 ; j_<r ; j_++) { 
+		for (j_=0 ; j_<r ; j_++) { 	
 
 			scanf("%s", letra); 
 			for (k_=0 ; k_<c ; k_++) { 
 
 				letters[j_][k_] = letra[k_];
-				setUpdate(letter_set, letra[k_] ) ; 
+				if ( letter_set.count( letra[k_] ) != 0 ) 
+					letter_set[ letra[k_] ] += 1; 
 
 				if ( letra[k_] == 'A' ) { 
 					dummie.first = j_; 
@@ -187,12 +183,11 @@ int main()
 		}	
 
 
-		if ( !setCheck( letter_set ) ) {	//if not all letters then avoid traversing
+		if ( !setCheck( letter_set ) ) 	//if not all letters then avoid traversing
 			resp[i_] = false; 
-		}
 		else {
 			for(pi source : begins )  {
-				resp[i_] = traversing(visited, source.first, source.second, r, c, 1); 
+				resp[i_] = traversing(source.first, source.second, r, c, 1); 
 	
 				if (resp[i_])
 					break; 		
