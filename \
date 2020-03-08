@@ -49,14 +49,13 @@ void dfs_rec(adl &graph, int r) {
 	}
 };
 
-int myFind(int e, int r) { 
+int myFind(int e) { 
 	int dum; 
 
-	dum = e; 
+	dum = parents[e]; 
 
-	while ( dum != r ) {
+	while ( e != parents[e] ) 
 		dum = parents[dum] ;
-	}
 
 	if ( dum != e) 
 		parents[dum] = e ;
@@ -64,17 +63,17 @@ int myFind(int e, int r) {
 	return dum;
 };
 
-void myUnion(int x, int y, int r) { 
+void myUnion(int x, int y) { 
 	int px, py;
 
-	px = myFind(x, r); 
-	py = myFind(y, r); 
+	px = myFind(x); 
+	py = myFind(y); 
 
 	if (px != py) { 
-		if (rk[px] >= rk[py] ) {
+		if (rank[px] >= rank[py] ) {
 			parents[py] = px ;
-			if(rk[px] == rk[py])  
-				rk[px] += 1; 
+			if(rank[px] == rank[py])  
+				rank[px] += 1; 
 		}
 		else { 
 			parents[px] = py; 
@@ -93,7 +92,7 @@ int main() {
 
 	for (i_=0 ; i_<n ; i_++)  {
 		parents[i_] = -1; 
-		rk[i_] = 0;
+		rank[i_] = 0;
 	}
 	parents[0] = 0 ;
 
@@ -105,9 +104,6 @@ int main() {
 	
 	dfs_rec(list, 0); 
 
-	for (i_=0 ; i_<n ; i_++) 
-		myFind(i_, 0); 
-	
 
 	for (i_=0 ; i_<n ; i_++)  
 		cout<<parents[i_]<<" "; 

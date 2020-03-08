@@ -57,22 +57,13 @@ data NestedList a = Elem a | List [NestedList a]
 --flatten (Elem x) = [x]
 --flatten (List (x:xs)) = flatten x ++ flatten xs 
 
-<<<<<<< HEAD
-myMergesort :: (Ord a) => [a] -> [a]
-myMergesort [] = []
-myMergesort (x:xs) = (myMergesort left) ++ [x] ++ (myMergesort right)
-	where 	left = filter (<x) xs
-		right = filter (>x) xs	
-=======
 
 myQuicksort :: (Ord a) => [a] -> [a] 
-myQuicksort (x:xs) = myQuicksort left ++ myQuicksort right 
+myQuicksort (x:xs) = myQuicksort left ++ x ++ myQuicksort right 
 	where 
 		left = [a | a<-xs, a<=x] 
 		right = [a | a<-xs, a>x]
---myQuicksort [x] = [x]
 myQuicksort [] = [] 
 
->>>>>>> 4a91122204a0e5fad9dd7f4b7514f89dcdc8f892
 
 
