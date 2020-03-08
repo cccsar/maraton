@@ -229,7 +229,7 @@ Cool operatrions:
 	priority_queue < typename > 
 	priority_queue < typename, [vector, queue]<typename>, [greater,*less*]<typename> > 
 
-	It is internally implemented as a heap. Default max heap (with less**) -> See Set
+	It is internally implemented as a heap. Default max heap (with less**) de mayor a menor -> See Set 
 	//With pair orders according to "first" field//  
 
 It's odd to make an statement about this cause it encompasses sort of advance OOP in C++, but the idea is that some underlying container class template that support some operations (alongside with other requirements.. we're getting chessy), serve as a base for this structure. And of course, the behaviour is that we already know of a (greater) priority queue, implemented as a "max binary heap"
