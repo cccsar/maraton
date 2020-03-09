@@ -30,48 +30,48 @@ const int MSIZE = 182;
 const int APP = 10; 
 
 bool bitmap[MSIZE][MSIZE]; 
-int resp[MSIZE][MSIZE] ; 	// tendre que copiar cada respuesta?? para imprimirla?
+int resp[MSIZE][MSIZE] ; 
 
 
 void getSuccessors(queue<pi> &suc, int x, int y , int n, int m) {//filters out whites
 	pi dummie; 
 			
-	if ( x != 0 && !bitmap[x-1][y] ) { 
+	if ( x > 0 && !bitmap[x-1][y] ) { 
 		dummie.first = x-1;
 		dummie.second = y; 	
 		suc.push(dummie); 
 	}
-	if ( x != n-1 && !bitmap[x+1][y] ) { 
+	if ( x < n-1 && !bitmap[x+1][y] ) { 
 		dummie.first = x+1;
 		dummie.second = y; 	
 		suc.push(dummie); 
 	}
-	if ( y != 0 && !bitmap[x][y-1] ) { 
+	if ( y > 0 && !bitmap[x][y-1] ) { 
 		dummie.first = x;
 		dummie.second = y-1; 	
 		suc.push(dummie); 
 	}
-	if ( y != n-1 && !bitmap[x][y+1] ) { 
+	if ( y < m-1 && !bitmap[x][y+1] ) { 
 		dummie.first = x;
 		dummie.second = y+1; 	
 		suc.push(dummie); 
 	}
-	if ( x != 0 && y != 0 && !bitmap[x-1][y-1] ) { 
+	if ( x > 0 && y > 0 && !bitmap[x-1][y-1] ) { 
 		dummie.first = x-1;
 		dummie.second = y-1; 	
 		suc.push(dummie); 
 	}
-	if ( x != n-1 && y != 0 && !bitmap[x+1][y-1] ) { 
+	if ( x < n-1 && y > 0 && !bitmap[x+1][y-1] ) { 
 		dummie.first = x+1;
 		dummie.second = y-1; 	
 		suc.push(dummie); 
 	}
-	if ( x != 0 && y != n+1 && !bitmap[x-1][y+1] ) { 
+	if ( x > 0 && y < m-1 && !bitmap[x-1][y+1] ) { 
 		dummie.first = x-1;
 		dummie.second = y+1; 	
 		suc.push(dummie); 
 	}
-	if ( x != n+1 && y != n+1 && !bitmap[x+1][y+1] ) { 
+	if ( x < n-1 && y < m-1 && !bitmap[x+1][y+1] ) { 
 		dummie.first = x+1;
 		dummie.second = y+1; 	
 		suc.push(dummie); 
@@ -85,9 +85,11 @@ int getDist(int x, int y, pi rest ) {
 
 int main() 
 {
-	int t, n, m, count, dist, i_, j_, k_; 
+	int t, n, m, dist, i_, j_, k_; 
 	char word[MSIZE];
 	bool guard; 
+	set< pi > parallel;
+	set< pi > :: iterator it; 
 	queue< pi > imp_set, help; 
 	pi k, j; 
 
@@ -136,7 +138,11 @@ int main()
 							//set successor to mincost found
 							if ( resp[ k.first ][ k.second ] > dist) {  
 								resp[ k.first ][ k.second ] = dist; 
-								imp_set.push(k); 		
+
+								if ( parallel.count( k ) == 0 ) { 
+									parallel.insert(k); 
+									imp_set.push(k); 		
+								}
 							}	
 						}
 					}
@@ -147,20 +153,29 @@ int main()
 			//this iterates through each layer until all updated with 
 			//minimum distance
 			while( !imp_set.empty() ) { 
+
 				k = imp_set.front(); 
 				imp_set.pop(); 
+
+				it =  parallel.find( k ) ;
+				parallel.erase( it ) ; 
 	
 				getSuccessors(help, k.first, k.second, n, m ); 
 	
 				while( !help.empty() ) { 
 					j = help.front(); 
 					help.pop(); 
+					
 					dist = getDist(k.first, k.second, j ); 
 	
 					if ( resp[ j.first ][ j.second ] > dist ) {
+
 						resp[ j.first ][ j.second ] = dist; 
 						//reinsert to continue with following layer
-						imp_set.push( j ); 	
+						if (parallel.count( j ) == 0 ) { 
+							parallel.insert( j ) ; 
+							imp_set.push( j ); 	
+						}
 					}
 				}
 			}
