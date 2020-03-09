@@ -8,8 +8,13 @@
 #include<queue>
 #include<utility>
 #include<climits> 
+<<<<<<< HEAD
+#include<string.h>
+=======
 #include<unordered_set>
+>>>>>>> 54b92784c54a52cd8ee07a1aa6b5d699f9adc1fb
 
+using namespace std; 
 
 using namespace std; 
 
@@ -28,6 +33,17 @@ typedef pair <int, pair<int, int> > pii;
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
 	
+<<<<<<< HEAD
+#define MAXSIZE 10000
+
+int main() 
+{
+	int hola[MAXSIZE];
+
+	memset(hola, -1, 1000); 
+
+	cout<<hola[0]<<endl;
+=======
 
 int main() 
 {
@@ -45,6 +61,7 @@ int main()
 
 	for(pi k : hola ) 
 		cout<<k.first<<" "<<k.second<<endl; 
+>>>>>>> 54b92784c54a52cd8ee07a1aa6b5d699f9adc1fb
 
 	return 0; 
 }
