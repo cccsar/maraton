@@ -7,7 +7,6 @@
 #include<stack>
 #include<queue>
 #include<utility>
-#include<unordered_set> 
 
 using namespace std; 
 
@@ -30,7 +29,8 @@ const int MAXINT = 2147483647;
 const int MAXS = 500;
 const int MAXT = 100;
 
-int cost[2][MAXS] ; 
+
+bool excluded[MAXS][MAXS];
 int resp[MAXT] ;
 
 
@@ -46,31 +46,39 @@ void reverse(vii graph[], vii invgraph[], int size ) {
 
 
 
-void myDijkstra(vii graph[], int cost[][MAXS], int source, int i) { 
-	priority_queue< pii, vector<pii> , greater<pii> > pq; 
-	pi dummie; 
+void myDijkstra(vii graph[], int cost[MAXS], int source) { 
+	priority_queue< pi, vector<pi> , greater<pi> > pq; 
+	pi dum; 
 
 	pq.push( { 0, source } ); 
-	cost[i][source] = 0 ; 
+	cost[source] = 0 ; 
 
 	while ( !pq.empty() ) { 
-		dummie = pq.top(); 
+		dum = pq.top(); 
 		pq.pop(); 
 
-		for(pi suc : graph[ dummie.second ] ) { 
-			if ( cost[ succ.second ] > cost[ k.second ] + k.first ) { 
-
+		for(pi succ : graph[ dum.second ] ) { 
+			if ( cost[ succ.second ] > cost[ dum.second ] + succ.first 
+					&& !excluded[ dum.second ][ succ.second ] ) { 
+				cost[ succ.second ] = cost[ dum.second ] + succ.first ; 
+				pq.push( succ ) ; 
 			}
 		}		
 	}
 }
+
+
 int main() 
 {
-	int n, m, s, d, u, v, p, i_; 
-	vii *digraph ,*invgraph;
+	int n, m, s, d, u, v, p, i_, count; 
+	int cost_s[MAXS], cost_d[MAXS];
+	vii *digraph ,*invgraph, *reset;
 
 	digraph = new vii[MAXS]; 
 	invgraph = new vii[MAXS]; 
+	reset = new vii; 
+
+	count = 0 ;
 
 	while ( true ) { 
 
@@ -84,7 +92,44 @@ int main()
 			digraph[u].push_back( {p, v} ); 
 		}	
 
-		
+		reverse(digraph, invgraph, n); 
+
+		//compute shortest path from both source and destination
+		myDijkstra(digraph, cost_s, s); 
+		myDijkstra(invgraph, cost_d, d); 
+
+		//using computed path, find all edges belonging to a shortest path and add
+		//them to the exclusion matrix
+		for(i_=0; i_<n ; i_++) {
+			for(pi edge: digraph[i_] ) { 
+				if ( cost_s[i_] + edge.first + cost_d[ edge.second ] == cost_s[ d ] )  {
+					excluded[i_][ edge.second ] = true; 
+					reset->push_back( {i_, edge.second } ) ; 
+				}	
+			}
+			cost_s[i_] = MAXINT; //reset cost from source while excluding edges
+		}	
+
+		//recompute dijkstra, this time only from source and return shortest path found
+		myDijkstra( digraph, cost_s, s); 
+
+		resp[ count ] = ( cost_s[ d ] != MAXINT )? cost_s[d] : -1 ; 
+		count += 1; 	
+
+		//reset
+		for(i_=0; i_<n ; i_++) {
+			cost_s[i_] = cost_d[i_] = MAXINT; 	
+			digraph[i_].clear(); 
+			invgraph[i_].clear(); 
+		}	
+
+		for(pi vis : *reset) 		//this should be at least n^2.. hope not
+			excluded[vis.first][vis.second] = false; 
+		reset->clear(); 
 	}
+
+	for(i_ = 0; i_<count; i_++) 
+		cout<<resp[i_]<<endl; 
+
 	return 0; 
 }

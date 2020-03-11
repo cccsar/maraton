@@ -34,7 +34,7 @@ typedef vector< vii > wadl;
 
 int main() 
 {
-	cout<<INT_MAX<<endl; 
+	cout<<sizeof(bool)<<endl; 	
 
 	return 0; 
 
