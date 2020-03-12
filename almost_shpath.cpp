@@ -78,6 +78,9 @@ int main()
 	invgraph = new vii[MAXS]; 
 	reset = new vii; 
 
+	for(i_=0; i_<MAXS ; i_++)
+		cost_s[i_] = cost_d[i_] = MAXINT; 	
+
 	count = 0 ;
 
 	while ( true ) { 
@@ -87,6 +90,7 @@ int main()
 			break; 
 
 		rii(s, d); 	
+
 		for (i_=0 ; i_<m ; i_++) { 
 			riii(u, v, p); 
 			digraph[u].push_back( {p, v} ); 
@@ -97,6 +101,7 @@ int main()
 		//compute shortest path from both source and destination
 		myDijkstra(digraph, cost_s, s); 
 		myDijkstra(invgraph, cost_d, d); 
+
 
 		//using computed path, find all edges belonging to a shortest path and add
 		//them to the exclusion matrix

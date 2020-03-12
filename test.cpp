@@ -34,8 +34,8 @@ typedef vector< vii > wadl;
 
 int main() 
 {
-	cout<<sizeof(bool)<<endl; 	
-
+	cout<<sizeof(double)<<endl; 
+	cout<<sizeof(float)<<endl; 
 	return 0; 
 
 }
