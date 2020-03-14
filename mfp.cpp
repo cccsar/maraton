@@ -74,23 +74,6 @@ void bfsCost(int cost[][MAXS+1], char plot[][MAXS+1], int i, int j, int width, i
 }
 
 
-void printMat(int cost[][MAXS+1], int width, int height) { 
-	int j_, k_; 
-
-	for(j_=0; j_<=width+1 ; j_++) {
-		for(k_=0; k_<=height+1 ; k_++) {
-			if( cost[j_][k_] == MAXINT ) 
-				cout<<"/"; 
-			else 
-				cout<<cost[j_][k_]; 
-		}
-		cout<<endl; 
-	}
-	cout<<endl; 
-
-
-}
-
 int main() 
 {
 	int t, n, m, i_, j_, k_; 
@@ -121,12 +104,6 @@ int main()
 			}
 		}	
 
-		for(j_=1; j_<=n ; j_++) {
-			for(k_=1; k_<=m ; k_++) {
-				cout<<graph[j_][k_]; 	
-			}
-			cout<<endl; 
-		}
 
 		bfsCost(cost_a, graph, begins[0].first, begins[0].second, n, m); 
 		bfsCost(cost_b, graph, begins[1].first, begins[1].second, n, m); 
@@ -142,6 +119,7 @@ int main()
 			}
 		}	
 		
+
 		resp[i_] = less; 
 
 		for(j_=0; j_<=n+1 ; j_++) { //clearing memory
