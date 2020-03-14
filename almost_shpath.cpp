@@ -46,9 +46,10 @@ void reverse(vii graph[], vii invgraph[], int size ) {
 
 
 
-void myDijkstra(vii graph[], int cost[MAXS], int source) { 
+void myDijkstra(vii graph[], int cost[MAXS], int source, int size) { 
 	priority_queue< pi, vector<pi> , greater<pi> > pq; 
-	pi dum; 
+	int i_, itt; 
+	pi dum, itt; 
 
 	pq.push( { 0, source } ); 
 	cost[source] = 0 ; 
@@ -57,10 +58,17 @@ void myDijkstra(vii graph[], int cost[MAXS], int source) {
 		dum = pq.top(); 
 		pq.pop(); 
 
-		for(pi succ : graph[ dum.second ] ) { 
-			if ( cost[ succ.second ] > cost[ dum.second ] + succ.first 
-					&& !excluded[ dum.second ][ succ.second ] ) { 
-				cost[ succ.second ] = cost[ dum.second ] + succ.first ; 
+		//for(pi succ : graph[ dum.second ] ) { 
+		for(i_=0; i_<graph[dum.second].size() ; i_++) {
+			itt = graph[dum.second][i_];
+
+			//if ( cost[ succ.second ] > cost[ dum.second ] + succ.first 
+
+			if ( cost[ itt.second ] > cost[ dum.second ] + itt.first 
+					&& !excluded[ dum.second ][ itt.second ] ) { 
+
+				cost[ itt.second ] = cost[ dum.second ] + itt.first
+				//cost[ succ.second ] = cost[ dum.second ] + succ.first ; 
 				pq.push( succ ) ; 
 			}
 		}		
@@ -72,6 +80,7 @@ int main()
 {
 	int n, m, s, d, u, v, p, i_, count; 
 	int cost_s[MAXS], cost_d[MAXS];
+	pi itt; 
 	vii *digraph ,*invgraph, *reset;
 
 	digraph = new vii[MAXS]; 
@@ -106,10 +115,16 @@ int main()
 		//using computed path, find all edges belonging to a shortest path and add
 		//them to the exclusion matrix
 		for(i_=0; i_<n ; i_++) {
-			for(pi edge: digraph[i_] ) { 
-				if ( cost_s[i_] + edge.first + cost_d[ edge.second ] == cost_s[ d ] )  {
-					excluded[i_][ edge.second ] = true; 
-					reset->push_back( {i_, edge.second } ) ; 
+			
+			//for(pi edge: digraph[i_] ) { 
+			for(j_=0; j_<digraph[i_].size() ; j_++) {
+				itt = digraph[i_][j_];
+				//if ( cost_s[i_] + edge.first + cost_d[ edge.second ] == cost_s[ d ] )  {
+				if ( cost_s[i_] + itt.first + cost_d[ itt.second ] == cost_[ d] ) { 
+					//excluded[i_][ edge.second ] = true; 
+					excluded[i_][ itt.second ] = true; 
+					//reset->push_back( {i_, edge.second } ) ; 
+					reset->push_back( {i_, itt.second } ); 
 				}	
 			}
 			cost_s[i_] = MAXINT; //reset cost from source while excluding edges
@@ -128,8 +143,11 @@ int main()
 			invgraph[i_].clear(); 
 		}	
 
-		for(pi vis : *reset) 		//this should be at least n^2.. hope not
-			excluded[vis.first][vis.second] = false; 
+		//for(pi vis : *reset) 		//this should be at least n^2.. hope not
+		for(i_=0; i_<reset.size() ; i_++) {
+			//excluded[vis.first][vis.second] = false; 
+			excluded[ reset[i_].first ][ reset[i_].second ] = false; 
+		}
 		reset->clear(); 
 	}
 

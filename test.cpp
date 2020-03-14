@@ -34,8 +34,7 @@ typedef vector< vii > wadl;
 
 int main() 
 {
-	cout<<sizeof(double)<<endl; 
-	cout<<sizeof(float)<<endl; 
+	cout<<min(4,5)<<endl; 
 	return 0; 
 
 }
