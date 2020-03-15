@@ -95,17 +95,24 @@ bool traversing(int i, int j, int height, int width, const int index) {
 	guard = false; 
 
 	successors(surr, i, j, height, width); 
-	
+
 	for(pi succ: surr ) { 
 		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {
 
-			visited.push_back(succ);
+			//visited.push_back(succ);
 			vtd[ succ.first ][ succ.second ] = true; 
 
-			if ( index == WSIZE - 1)
+			
+
+			if ( index == WSIZE - 1) {
+				vtd[ succ.first ][ succ.second ] = false; 
 				return true; 
+			}
+
 
 			guard = traversing(succ.first, succ.second, height, width, index + 1); 	
+			
+			vtd[ succ.first ][ succ.second ] = false; 
 
 			if ( guard ) 	//if the call returned true, skip traverse
 				break; 
@@ -113,9 +120,6 @@ bool traversing(int i, int j, int height, int width, const int index) {
 		}
 	}
 	
-	for( pi dot : visited ) 
-		vtd[ dot.first ][ dot.second ] = false; 
-
 	return guard; 
 }
 

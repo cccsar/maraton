@@ -27,8 +27,27 @@ typedef vector< vi > adl;
 typedef vector< vii > wadl; 
 	
 
+const int MAXS = 100000000;
+
+int zet[MAXS]; 
+vector<int> *liss = new vector<int>[MAXS]; 
+
+void lis(){ 
+	//get index and latest found, if zet[index] is greater than latest found
+	//then becomes latest found and is accumulated into a vector
+}
+
+
 int main() 
 {
+	int n, e; 
+
+	scanf("%d", &n); 
+
+	for(int k=0; k<n; k++) {
+		scanf("%d", &e); 
+		zet[k] = e; 
+	}
 
 	return 0; 
 }

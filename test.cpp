@@ -8,6 +8,11 @@
 #include<queue>
 #include<utility>
 #include<climits> 
+<<<<<<< HEAD
+=======
+#include<string.h>
+#include<unordered_set>
+>>>>>>> 8adc5ab969f650e3f957fa1940165122f4c3de70
 
 using namespace std; 
 
@@ -32,30 +37,7 @@ typedef vector< vii > wadl;
 
 int main() 
 {
-	int hola[MAXSIZE];
-
-	memset(hola, -1, 1000); 
-
-	cout<<hola[0]<<endl;
-=======
-
-int main() 
-{
-	int i_; 
-	unordered_set< pi > hola; 
-	pi dummie; 
-
-	for(i_=0; i_<10 ; i_++) {
-		dummie.first = i_; 	
-		dummie.second = i_+1; 	
-		hola.insert( dummie ) ;
-	}	
-
-	hola.insert( {4,5} );
-
-	for(pi k : hola ) 
-		cout<<k.first<<" "<<k.second<<endl; 
->>>>>>> 54b92784c54a52cd8ee07a1aa6b5d699f9adc1fb
-
+	cout<<min(4,5)<<endl; 
 	return 0; 
+
 }
