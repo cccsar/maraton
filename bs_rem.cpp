@@ -8,6 +8,7 @@
 #include<queue>
 #include<utility>
 #include<climits> 
+#include<math.h> 
 
 using namespace std; 
 
@@ -27,32 +28,45 @@ typedef vector< vi > adl;
 typedef vector< vii > wadl; 
 	
 bool bs(int arr[], int e, const int p, const int q) { 
-	int k =  q - (q-p)/2 +1 ; 
 
+	int k = p + (q-p)/2 ; 
+	//cout<<"p:"<<p<<" q:"<<q<<endl; 
+	//cout<<"arr["<<p<<"]: "<<arr[p]<<" arr["<<q<<"]:"<<arr[q]<<endl; 
+
+	//cout<<"sol: "<<arr[k]<<endl; 
 	if ( arr[k] > e ) {
-		if ( k == q ) 
-			return false; 
-		bs(arr, e, p, k); 
+		if ( p == q - 1) 
+		return bs(arr, e, p, k); 
 	}	
 	else if ( arr[k] < e ){ 
-		if ( k == p ) 
-			return false; 
-		bs(arr, e, k, q ); 
+		if ( p == q - 1 ) 
+			return (arr[q] != e )? false: true;
+		return bs(arr, e, k, q ); 
 	}
-	else 
-		return true; 
+
+	return true; 
 }
 
 int main() 
 {
-	int cost[10], i_; 
+	int cost[100], i_; 
+	int k ;
 
-	for(i_=1; i_<10 ; i_+=2) {
-		cost[i_] = i_+1; 
-	}
+	for(i_=0; i_<100 ; i_++) 
+		cost[i_] = i_ ;   
+	
+	
+	for(i_=0; i_<100 ; i_++) {
+		k = bs(cost, i_, 0, 99); 
+		( k == true)? cout<<"encontrado"<<endl: cout<<"no encontrado"<<endl; 
+	}	
+
+	k = bs(cost, -1, 0, 99); 
+	( k == true)? cout<<"encontrado"<<endl: cout<<"no encontrado"<<endl; 
+	k = bs(cost, 101, 0, 99); 
+	( k == true)? cout<<"encontrado"<<endl: cout<<"no encontrado"<<endl; 
 
 
-
-	cout<<bs(cost, 2, 0, 9)<<endl; 
+	cout<<k<<endl;
 	return 0; 
 }
