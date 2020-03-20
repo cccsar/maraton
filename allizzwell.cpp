@@ -38,59 +38,40 @@ const char* WORD = "AEILWZ";
 
 bool resp[TCASES];
 bool vtd[MATMAX][MATMAX];
-char letters[MATMAX][MATMAX];
+char letters[MATMAX+1][MATMAX+1];
 
 void successors(vii &suc,  int i, int j , int height, int width) { 
-	pi help;
 
-	if ( i != 0 && !vtd[i-1][j]) { 
-		help.first = i-1; 
-		help.second = j;  
-		suc.push_back( help ) ; 
-	}
-	if ( i != height - 1 && !vtd[i+1][j])   {
-		help.first = i + 1 ;
-		help.second = j; 
-		suc.push_back( help );
-	}
-	if ( j != 0 && !vtd[i][j-1]) {
-		help.first = i; 
-		help.second = j - 1;
-		suc.push_back( help ); 
-	}
-	if ( j != width - 1 && !vtd[i][j+1]) { 
-		help.first = i ; 
-		help.second = j + 1;
-		suc.push_back( help );
-	}
+	if ( i > 0 && !vtd[i-1][j])  		//up
+		suc.push_back( { i-1, j}  ) ; 
 
-	if( i != 0 && j != 0 && !vtd[i-1][j-1]) {
-		help.first = i-1; 
-		help.second = j-1; 
-		suc.push_back( help );
-	}
-	if( i != 0 && j != width - 1 && !vtd[i-1][j+1])  {
-		help.first = i - 1;
-		help.second = j + 1;
-		suc.push_back( help ); 
-	}
-	if( i != height - 1 && j != 0 && !vtd[j+1][j-1]) {
-		help.first = i + 1;
-		help.second = j - 1;
-		suc.push_back( help );
-	}
-	if ( i!= height - 1 && j != width - 1 && !vtd[i+1][j+1]){
-		help.first = i + 1;
-		help.second = j + 1;
-		suc.push_back( help );
-	}
+	if ( i < height - 1 && !vtd[i+1][j])   	//down
+		suc.push_back( { i+1, j} );
 
+	if ( j > 0 && !vtd[i][j-1]) 		//left
+		suc.push_back( {i, j-1} ); 
+	
+	if ( j < width - 1 && !vtd[i][j+1])  	//right
+		suc.push_back( {i, j+1} );
+	
+
+	if( i > 0 && j > 0 && !vtd[i-1][j-1]) 			//top left corner
+		suc.push_back( {i-1, j-1} );
+	
+	if( i > 0 && j < width - 1 && !vtd[i-1][j+1])  		//top right corner
+		suc.push_back( {i-1, j+1} ); 
+	
+	if( i < height - 1 && j > 0 && !vtd[i+1][j-1]) 		//bottom left corner
+		suc.push_back( {i+1, j-1} );
+	
+	if ( i < height - 1 && j < width - 1 && !vtd[i+1][j+1])	//bottom right corner
+		suc.push_back( {i+1, j+1} );
 }
 
 
 bool traversing(int i, int j, int height, int width, const int index) { 
 	bool guard; 
-	vii surr, visited; 
+	vii surr; 
 
 	guard = false; 
 
@@ -99,7 +80,6 @@ bool traversing(int i, int j, int height, int width, const int index) {
 	for(pi succ: surr ) { 
 		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {
 
-			//visited.push_back(succ);
 			vtd[ succ.first ][ succ.second ] = true; 
 
 			
@@ -148,11 +128,10 @@ bool setCheck(unordered_map<char, int> letter_set) {
 int main() 
 {
 	int t, r, c, i_, j_, k_; 
-	char letra[MATMAX]; 
+	char letra[MATMAX+1]; 
 	vector< vector<bool> > visited; 
 	unordered_map<char, int> letter_set; 
 	vii begins; 	
-	pi dummie, help; 
 
 
 	for(i_=0; i_<SSIZE ; i_++) 
@@ -177,12 +156,9 @@ int main()
 				if ( letter_set.count( letra[k_] ) != 0 ) 
 					letter_set[ letra[k_] ] += 1; 
 
-				if ( letra[k_] == 'A' ) { 
-					dummie.first = j_; 
-					dummie.second = k_; 
-
-					begins.push_back(dummie); 
-				}
+				if ( letra[k_] == 'A' )  
+					begins.push_back( {j_, k_} ); 
+				
 			}	
 		}	
 
@@ -197,7 +173,6 @@ int main()
 					break; 		
 			}	
 		}
-
 
 		begins.clear(); 	
 		for(j_=0; j_<SSIZE ; j_++) 
