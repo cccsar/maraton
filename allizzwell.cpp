@@ -40,7 +40,7 @@ bool resp[TCASES];
 bool vtd[MATMAX][MATMAX];
 char letters[MATMAX+1][MATMAX+1];
 
-void successors(vii &suc,  int i, int j , int height, int width) { 
+void successors(vii &suc,  int i, int j , int height, int wedth) { 
 
 	if ( i > 0 && !vtd[i-1][j])  		//up
 		suc.push_back( { i-1, j}  ) ; 
@@ -51,31 +51,31 @@ void successors(vii &suc,  int i, int j , int height, int width) {
 	if ( j > 0 && !vtd[i][j-1]) 		//left
 		suc.push_back( {i, j-1} ); 
 	
-	if ( j < width - 1 && !vtd[i][j+1])  	//right
+	if ( j < wedth - 1 && !vtd[i][j+1])  	//right
 		suc.push_back( {i, j+1} );
 	
 
 	if( i > 0 && j > 0 && !vtd[i-1][j-1]) 			//top left corner
 		suc.push_back( {i-1, j-1} );
 	
-	if( i > 0 && j < width - 1 && !vtd[i-1][j+1])  		//top right corner
+	if( i > 0 && j < wedth - 1 && !vtd[i-1][j+1])  		//top right corner
 		suc.push_back( {i-1, j+1} ); 
 	
 	if( i < height - 1 && j > 0 && !vtd[i+1][j-1]) 		//bottom left corner
 		suc.push_back( {i+1, j-1} );
 	
-	if ( i < height - 1 && j < width - 1 && !vtd[i+1][j+1])	//bottom right corner
+	if ( i < height - 1 && j < wedth - 1 && !vtd[i+1][j+1])	//bottom right corner
 		suc.push_back( {i+1, j+1} );
 }
 
 
-bool traversing(int i, int j, int height, int width, const int index) { 
+bool traversing(int i, int j, int height, int wedth, const int index) { 
 	bool guard; 
 	vii surr; 
 
 	guard = false; 
 
-	successors(surr, i, j, height, width); 
+	successors(surr, i, j, height, wedth); 
 
 	for(pi succ: surr ) { 
 		if( letters[ succ.first ][ succ.second ] == ALLIZZWELL[ index ] ) {
@@ -90,7 +90,7 @@ bool traversing(int i, int j, int height, int width, const int index) {
 			}
 
 
-			guard = traversing(succ.first, succ.second, height, width, index + 1); 	
+			guard = traversing(succ.first, succ.second, height, wedth, index + 1); 	
 			
 			vtd[ succ.first ][ succ.second ] = false; 
 
@@ -177,7 +177,6 @@ int main()
 		begins.clear(); 	
 		for(j_=0; j_<SSIZE ; j_++) 
 			letter_set[ WORD[j_] ] = 0; 
-
 	}
 
 
