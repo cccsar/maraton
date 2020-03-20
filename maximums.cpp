@@ -8,11 +8,6 @@
 #include<queue>
 #include<utility>
 #include<climits> 
-#include<string.h>
-#include<unordered_set>
-#include<math.h> 
-
-using namespace std; 
 
 using namespace std; 
 
@@ -30,10 +25,38 @@ typedef pair <int, int> pi;
 typedef pair <int, pair<int, int> > pii; 
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
-	
-#define MAXSIZE 10000
 
-int main() { 
-	cout<<sqrt(25)<<endl; 
-	return 0 ;
+const int MAXINT = 2147483647;
+
+const int MAXS = 200000; 
+
+int as[MAXS], bs[MAXS], xs[MAXS]; 
+
+void foo(int n ) { 
+	int i_; 
+
+	as[0] = bs[0] ; 
+	xs[0] = 0; 
+	
+	for(i_=1; i_<n ;i_++) { 
+		xs[i_] = max( xs[i_-1], as[i_-1] ) ; 
+		as[i_] = bs[i_] + xs[i_] ; 	
+	}	
+		
+}
+int main() 
+{
+	int n, i_; 
+
+	ri(n); 
+	for(i_=0; i_<n ;i_++)  
+		ri(bs[i_]);
+
+	foo(n) ;
+
+	for(i_=0; i_<n ;i_++)  
+		cout<<as[i_]<<" "; 
+	cout<<endl; 
+
+	return 0; 
 }
