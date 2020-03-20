@@ -34,48 +34,31 @@ int resp[MSIZE][MSIZE] ;
 
 
 void getSuccessors(queue<pi> &suc, int x, int y , int n, int m) {//filters out whites
-	pi dummie; 
 			
-	if ( x > 0 && !bitmap[x-1][y] ) { 
-		dummie.first = x-1;
-		dummie.second = y; 	
-		suc.push(dummie); 
-	}
-	if ( x < n-1 && !bitmap[x+1][y] ) { 
-		dummie.first = x+1;
-		dummie.second = y; 	
-		suc.push(dummie); 
-	}
-	if ( y > 0 && !bitmap[x][y-1] ) { 
-		dummie.first = x;
-		dummie.second = y-1; 	
-		suc.push(dummie); 
-	}
-	if ( y < m-1 && !bitmap[x][y+1] ) { 
-		dummie.first = x;
-		dummie.second = y+1; 	
-		suc.push(dummie); 
-	}
-	if ( x > 0 && y > 0 && !bitmap[x-1][y-1] ) { 
-		dummie.first = x-1;
-		dummie.second = y-1; 	
-		suc.push(dummie); 
-	}
-	if ( x < n-1 && y > 0 && !bitmap[x+1][y-1] ) { 
-		dummie.first = x+1;
-		dummie.second = y-1; 	
-		suc.push(dummie); 
-	}
-	if ( x > 0 && y < m-1 && !bitmap[x-1][y+1] ) { 
-		dummie.first = x-1;
-		dummie.second = y+1; 	
-		suc.push(dummie); 
-	}
-	if ( x < n-1 && y < m-1 && !bitmap[x+1][y+1] ) { 
-		dummie.first = x+1;
-		dummie.second = y+1; 	
-		suc.push(dummie); 
-	}
+	if ( x > 0 && !bitmap[x-1][y] ) 	 //down
+		suc.push( {x-1, y} ); 
+
+	if ( x < n-1 && !bitmap[x+1][y] )  	//up
+		suc.push( {x+1, y} ); 
+	
+	if ( y > 0 && !bitmap[x][y-1] )  	//left
+		suc.push( {x, y-1} ); 
+	
+	if ( y < m-1 && !bitmap[x][y+1] )  	//rigth
+		suc.push( {x, y+1} ); 
+	
+	if ( x > 0 && y > 0 && !bitmap[x-1][y-1] )  	//top left
+		suc.push( {x-1, y-1} ); 
+	
+	if ( x < n-1 && y > 0 && !bitmap[x+1][y-1] ) 	//bottom left 
+		suc.push( {x+1, y-1} ); 
+	
+	if ( x > 0 && y < m-1 && !bitmap[x-1][y+1] )  	//top rigth
+		suc.push( {x-1, y+1} ); 
+	
+	if ( x < n-1 && y < m-1 && !bitmap[x+1][y+1] )  //bottom rigth
+		suc.push( {x+1, y+1}); 
+	
 }
 
 
@@ -107,6 +90,7 @@ int main()
 		scanf("%d %d", &n, &m); 
 
 		for (j_=0; j_<n; j_++) { 
+
 			scanf("%s", word); 
 			for (k_=0; k_<m; k_++)  {
 				bitmap[j_][k_] = (word[k_] == '1')? true : false ; 
