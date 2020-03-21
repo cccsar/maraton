@@ -31,7 +31,9 @@ typedef vector< vii > wadl;
 const int MAXINT = 2147483647;
 
 const int MAXL = 200000; 
+const int ALPHAS = 26; 
 char word[MAXL+1];
+
 
 int main() 
 {
@@ -61,12 +63,12 @@ int main()
 		}
 		else  
 			curr = i_;	
-
 	}	
-
-	if( lett [ word[n-1] ] ) 
+	
+	if( lett.count( word[n-1] ) ) 
 	       tot += (n-1-last)*(n-last)/2;	
 
+	
 
 	cout<<tot<<endl; 
 
