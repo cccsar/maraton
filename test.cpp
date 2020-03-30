@@ -14,8 +14,6 @@
 
 using namespace std; 
 
-using namespace std; 
-
 #define FOR(u,l) for(int i=l; i<u; i++) 
 #define ROF(l,u) for(int i=u; i>l-1; i--) 
 #define ri(c) scanf("%d",&c)
@@ -38,4 +36,3 @@ int main() {
 
 
 }
-eres marico
