@@ -1,3 +1,4 @@
+
 #include<iostream> 
 #include<stdio.h>
 #include<algorithm> 
@@ -8,11 +9,6 @@
 #include<queue>
 #include<utility>
 #include<climits> 
-#include<string.h>
-#include<unordered_set>
-#include<math.h> 
-
-using namespace std; 
 
 using namespace std; 
 
@@ -30,11 +26,46 @@ typedef pair <int, int> pi;
 typedef pair <int, pair<int, int> > pii; 
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
-	
-#define MAXSIZE 10000
 
-int main() { 
-	unordered_set<int> hola; 
+const int MAXINT = 2147483647;
 
 
+const int MAXT = 10000; 
+
+bool resp[MAXT]; 
+
+int main() 
+{
+	int n, a, b, s, q, c, quot, i_, diff; 
+
+	ri(q);
+	c = q+1 ;
+
+	while ( c-- ){ 
+		rii(a, b); 
+		rii(n, s); 
+
+		if ( a*n + b < s) 
+			resp[q-c] = false; 
+		else if ( a*n + b == s )
+			resp[q-c] = true; 
+		else { 
+			diff = n*a + b - s;
+			quot = diff/n; 
+			if ( quot > a )  
+				resp[q-c] = true; 
+			else { 
+				if ( diff - quot*n <= b) 
+					resp[q-c] = true; 
+				else
+					resp[q-c] = false; 
+			}
+		}
+	}
+
+	for(i_=0; i_<q ;i_++) { 
+		(resp[i_])? cout<<"YES\n" : cout<<"NO\n"; 
+	}	
+
+	return 0; 
 }

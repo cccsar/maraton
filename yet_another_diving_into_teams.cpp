@@ -8,11 +8,6 @@
 #include<queue>
 #include<utility>
 #include<climits> 
-#include<string.h>
-#include<unordered_set>
-#include<math.h> 
-
-using namespace std; 
 
 using namespace std; 
 
@@ -30,11 +25,41 @@ typedef pair <int, int> pi;
 typedef pair <int, pair<int, int> > pii; 
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
+
+const int MAXINT = 2147483647;
+
+const int MAXX =200; 
+
+bool resp[MAXX]; 
+int arr[MAXX]; 
+
+int main() 
+{
+	int q, n, i_, c, j_; 
+
+	ri(q); 
+
+	for(j_=0; j_<q; j_++) { 
+		ri(n); 
+
+		for(i_=0; i_<n ;i_++)  
+			scanf("%d",&arr[i_]); 
 	
-#define MAXSIZE 10000
+		if ( n != 1 ) { 	
+			sort(arr, arr + n); 
+		
+			for(i_=0; i_<n-1 ;i_++) { 
+				if ( arr[i_] + 1 == arr[i_+1] ) {
+					resp[j_] = true; 		
+					break; 
+				}
+			}
+		}
+	
+	}
 
-int main() { 
-	unordered_set<int> hola; 
+	for(i_=0; i_<q ;i_++)  
+		(resp[i_])? cout<<"2\n" : cout<<"1\n"; 
 
-
+	return 0; 
 }
