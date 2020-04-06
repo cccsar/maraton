@@ -10,7 +10,7 @@
 #include<climits> 
 #include<string.h>
 #include<unordered_set>
-#include<math.h> 
+#include<cmath>
 
 using namespace std; 
 
@@ -32,8 +32,7 @@ typedef vector< vii > wadl;
 #define MAXSIZE 10000
 
 int main() { 
-	unordered_set<int> hola; 
-
-	return 0; 
-
+	float f; 
+	scanf("%f",&f); 
+	printf("%f",f); 
 }

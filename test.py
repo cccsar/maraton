@@ -1,8 +1,10 @@
 from random import randint
 
-k = 200
+n = randint(1,100000); 
+n *= 2
 
-for i in range (0,k): 
-    for j in range(0,k): 
-            print("#",end="")
-    print("")
+print(n) 
+
+for i in range(0, n): 
+    print("a",end="")
+print("") 
