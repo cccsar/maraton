@@ -10,6 +10,8 @@
 #include<climits> 
 #include<string.h>
 #include<unordered_set>
+#include<map> 
+#include<unordered_map> 
 #include<cmath>
 
 using namespace std; 
@@ -32,7 +34,9 @@ typedef vector< vii > wadl;
 #define MAXSIZE 10000
 
 int main() { 
-	float f; 
-	scanf("%f",&f); 
-	printf("%f",f); 
+	map<int, int> help; 
+	unordered_map<int, int> mhelp; 
+		
+
+
 }
