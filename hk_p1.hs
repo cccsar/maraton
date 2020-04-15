@@ -74,4 +74,15 @@ pill [] = [[]]
 
 bind :: [[a]] -> [[a]]
 bind 
+
+-- important: 
+--   :info[!] [<name> ...]       display information about the given names
+--   :type <expr>                show the type of <expr>
+--   :type +d <expr>             show the type of <expr>, defaulting type variables
+--   :type +v <expr>             show the type of <expr>, with its specified tyvars
+
+--   :browse[!] [[*]<mod>]       display the names defined by module <mod>
+--                               (!: more details; *: all top-level names)
+--   :cd <dir>                   change directory to <dir>
+
  
