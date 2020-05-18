@@ -33,34 +33,6 @@ typedef vector< vii > wadl;
 	
 #define MAXSIZE 10000
 
-int gcd(int a, int b) { 
-	if ( a == b ) 
-		return a; 
-	else if (a>b)
-		return gcd(a-b, b); 
-
-	return gcd(a, b-a); 	
-}
-
-int mcm(int a, int b) {
-	return (a*b)/gcd(a,b); 
-}
-
-
 int main() { 
-	set<int> test; 
-	int n; 
-	
-	scanf("%d",&n); 
-	int p; 
-	for(int i=0; i<n; i++) {
-		scanf("%d",&p); 
-		test.insert( p) ; 
-	}
-
-	printf("%d\n",*test.begin()) ;
-	printf("size :%d\n",test.size()); 
-	for (int k : test) printf("%d \n",k ); 
-
-	printf(""); 	
+	printf("%ld \n%ld\n", sizeof(int), sizeof(long));
 }
