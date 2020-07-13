@@ -34,5 +34,7 @@ typedef vector< vii > wadl;
 #define MAXSIZE 10000
 
 int main() { 
+
+	
 	printf("%ld \n%ld\n", sizeof(int), sizeof(long));
 }
