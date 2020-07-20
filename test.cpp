@@ -10,7 +10,9 @@
 #include<climits> 
 #include<string.h>
 #include<unordered_set>
-#include<math.h> 
+#include<map> 
+#include<unordered_map> 
+#include<cmath>
 
 using namespace std; 
 
@@ -32,9 +34,14 @@ typedef vector< vii > wadl;
 #define MAXSIZE 10000
 
 int main() { 
+<<<<<<< HEAD
 	unordered_set<int> hola; 
 
 	return 0; 
 	a;sdlfkj;asdkl
+=======
+>>>>>>> df23937cd53faa0114f94c70b9d3dcb96f2c4299
 
+	
+	printf("%ld \n%ld\n", sizeof(int), sizeof(long));
 }
