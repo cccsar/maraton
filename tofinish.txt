@@ -1,2 +1,0 @@
-col_coins.cpp
-prod_tnum.cpp
