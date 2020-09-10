@@ -2,14 +2,48 @@
 #include <string.h>
 
 #define MAXS 10000
+#define YAG 3 
 
-int resp[MAXS]; 
 
+char resp[MAXS]; 
+
+const char* corresp = "-*?"; 
 
 char check( char wd[MAXS] ) { 
-	int st = 0; 
-	for (int i=0; i<strlen(wd); i++) {
-	}
+
+	int imp[YAG]; 
+
+	int sz = strlen(wd); 
+
+	if ( sz == 1 ) 
+		return (wd[0] == '1' || wd[0] == '4')? '+' : '#'; 
+	else if ( sz == 2 ) 
+		return (wd[0] == '7' && wd[1] == '8')? '+' : '#'; 
+        else { 
+	 	for (int i=0; i<YAG; i++) imp[i] = 0; 	
+
+		imp[0] = (wd[sz-2] = '3' && wd[sz-1] == '5')? 1 : 0; 
+		imp[1] = (wd[0] = '9' && wd[sz-1] == '4')? 1: 0 ; 
+		imp[2] = (wd[0] = '1' && wd[1] == '9' && wd[2] == '0' )? 1 : 0 ; 
+
+		if ( imp[0] + imp[1] + imp[2] == 1) { 
+			if (imp[0] == 1) 
+				return corresp[0];  
+			if (imp[1] == 1) 
+				return corresp[1];  
+			if (imp[2] == 1) 
+				return corresp[2];  
+		}
+		else  {
+			for (int i=0; i<YAG ; i++)  {
+				if ( imp[i] == 1) 
+					return corresp[i] ; 
+				return '+'; 
+			}
+		}
+	}	
+
+	return '#';
 }
 
 int main () { 
@@ -20,5 +54,9 @@ int main () {
 
 	for (int i=0; i<n; i++) { 
 		scanf("%s",wd); 	
+		resp[i] = check(wd); 
 	}
+
+	for (int i=0; i<n; i++) 
+		printf("%c\n",resp[i]) ; 
 }
