@@ -15,10 +15,8 @@ char check( char wd[MAXS] ) {
 
 	int sz = strlen(wd); 
 
-	if ( sz == 1 ) 
-		return (wd[0] == '1' || wd[0] == '4')? '+' : '#'; 
-	else if ( sz == 2 ) 
-		return (wd[0] == '7' && wd[1] == '8')? '+' : '#'; 
+	if ( sz < 3 ) 
+		return '+' ;
         else { 
 	 	for (int i=0; i<YAG; i++) imp[i] = 0; 	
 
@@ -34,13 +32,21 @@ char check( char wd[MAXS] ) {
 			if (imp[2] == 1) 
 				return corresp[2];  
 		}
-		else  {
+		else  
+			// check first for possible occurrences of positive results
+			for (int j=0; j<sz; j++) {  
+				if ( wd[j] == '1'  || wd[j] == '4')
+					return '+'; 
+				if (j != sz) 
+					if( wd[j] == '7' && wd[j+1] == '8') // trailing
+						return '+'; 
+			}
+
+			// check then for remaining possible ocurrences in corresp order
 			for (int i=0; i<YAG ; i++)  {
 				if ( imp[i] == 1) 
 					return corresp[i] ; 
-				return '+'; 
 			}
-		}
 	}	
 
 	return '#';

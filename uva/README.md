@@ -19,6 +19,7 @@ Order is, clasify problems in the same manner the book does and add comments on 
 * uva12250
 * uva12279
 * uva12289: remember trailing '\0' on strings
-* uva621 ###
+* uva621 : noc jejeje ###
+* uva 10114: esperando a que el judge se reactive
 
 ---

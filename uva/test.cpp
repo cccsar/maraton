@@ -9,16 +9,8 @@ using namespace std;
 
 typedef pair <int, int> pi; 
 
-const char * one = "one";
-
 int main() { 
-	priority_queue< pi > qk ;
-
-	qk.push( {1,9} ) ; 
-	qk.push( {2,9} ) ;
-
-
-	cout << qk.top().first << " " << qk.top().second << endl; 
-	qk.pop() ; 
-	cout << qk.top().first << " " << qk.top().second << endl; 
+	float hola; 
+	scanf("%f",&hola); 
+	printf("%f\n",hola); 
 }
