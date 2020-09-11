@@ -11,7 +11,7 @@ int main() {
 	float dp, loan; 
 	int dur = 1, nr, ind = 0; 
 	 
-	while ( dur > 0) { 
+	while ( dur >= 0) { 
 		
 		scanf ("%d %f %f %d",&dur, &dp, &loan, &nr); 
 		
