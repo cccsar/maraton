@@ -37,10 +37,9 @@ int resp[MAXT] ;
 void reverse(vii graph[], vii invgraph[], int size ) { 
 	int i_ ;
 
-	for (i_=0 ; i_<size ; i_++) { 
+	for (i_=0 ; i_<size ; i_++)  
 		for(pi k : graph[i_] ) 
 			invgraph[ k.second ].push_back( { k.first, i_ } );
-	}
 
 }
 
@@ -48,7 +47,7 @@ void reverse(vii graph[], vii invgraph[], int size ) {
 
 void myDijkstra(vii graph[], int cost[MAXS], int source, int size) { 
 	priority_queue< pi, vector<pi> , greater<pi> > pq; 
-	int i_, itt; 
+	int i_; 
 	pi dum, itt; 
 
 	pq.push( { 0, source } ); 

@@ -11,19 +11,18 @@ int main() {
 	float dp, loan; 
 	int dur = 1, nr, ind = 0; 
 	 
-	while ( dur >= 0) { 
-		
+	while ( true ) { 
+
 		scanf ("%d %f %f %d",&dur, &dp, &loan, &nr); 
+
+		if ( dur < 0 ) break ;
 		
-		int month; 
-		float dep ; 
-		for (int i=0; i<nr; i++) { 
-			scanf ("%d %f", &month, &dep); 
-			depR[i] = {month,dep} ;
-		}
+		for (int i=0; i<nr; i++)  
+			scanf ("%d %f", &depR[i].first, &depR[i].second) ; 
 
 		int help = -1; 
 		float k = loan / dur, tot = dp + loan, remL = loan; 
+
 		for (int i=0; i<dur; i++) { 
 			if ( help != nr && i == depR[help+1].first ) 
 				help += 1 ; 	
@@ -42,7 +41,7 @@ int main() {
 	}
 	
 
-	for (int i=0; i<ind-1 ;i++) 
+	for (int i=0; i<ind ;i++) 
  		printf("%d %s\n", resp[i], (resp[i] > 1)? "months": "month" ) ;		
 
 }
