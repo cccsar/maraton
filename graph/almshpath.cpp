@@ -4,7 +4,7 @@
 #include <vector> 
 #include <utility> 
 
-#define MAXS 500
+#define MAXS 501
 
 using namespace std ;
 
@@ -18,44 +18,53 @@ int resp[MAXS] ;
 minQ myQ; 
 
 void dijkstra(int source, vii graph[], int cost[], int parent[]) { 
-	pi dum; 
+	pi dum, help, jj; 
 	cost[source] = 0 ; 
 	parent[source] = source; 
-	myQ.push( {0, source} ) ; 
+
+	jj.first = 0; jj.second = source; 
+	myQ.push( jj ) ; 
 
 	while ( !myQ.empty() ) { 
 		dum = myQ.top() ;
 		myQ.pop() ;
 
-		for ( pi v : graph[ dum.second ] )  
-			//consider "deleted" edges
-			if ( v.second != -1 &&  cost[ dum.second ] + v.first < cost[ v.second ] ) { 
-			 	cost[v.second] = cost[ dum.second ] + v.first ;
-				parent[v.second ] = dum.second; 
+		for(unsigned i=0; i<graph[dum.second].size() ; i++)  {
+			help = graph[dum.second][i] ; 
+			if ( help.second != -1 &&  cost[ dum.second ] + help.first < cost[ help.second ] ) { 
+			 	cost[help.second] = cost[ dum.second ] + help.first ;
+				parent[help.second ] = dum.second; 
 
-				myQ.push( { cost[v.second], v.second } ) ; 
+				jj.first = cost[help.second] ; jj.second = help.second ; 
+				myQ.push( jj ) ; 
 			}		
+		}
 	}
 }
 
 void reverse(int size) { 
 	int k = size;
+	pi help; 
 
 	while ( k -- )  
-		for ( pi v : graph[k] ) 
-			revGraph[ v.second ].push_back ({ v.first, k } ); 
+		for (unsigned i=0; i<graph[k].size(); i++) {
+			help.first = graph[k][i].first; help.second = k; 
+			revGraph[ graph[k][i].second ].push_back (help); 
+		}
 }
 
 void delEdge (int u, int v ) { 
+	pi help ; 
 	
 	for(unsigned i=0; i<graph[u].size() ; i++ )
-		if ( graph[u][i].second == v ) 
-			graph[u][i] = { graph[u][i].first, - 1} ; // representative elimination
+		if ( graph[u][i].second == v ) { 
+			help.first = graph[u][i].first; help.second = -1 ; // representative elimination
+			graph[u][i] = help  ; 
+		}
 			
 }
 
 void delPath (int pivot) { 
-	//use parent and rParent	
 
 	int dum = pivot ; 
 	while( dum != parent[dum] )  { 
@@ -72,6 +81,7 @@ void delPath (int pivot) {
 
 int main() { 
 	int n, m, s, d , cnt = 0; 
+	pi help; 
 
 	while ( scanf("%d %d",&n, &m ) && n != 0 && m != 0 ) {
        		scanf("%d %d",  &s, &d) ; 
@@ -81,7 +91,8 @@ int main() {
 		int u,v, w; 
 		for (int i=0; i<m; i++) { 
 			scanf("%d %d %d",&u, &v, &w) ; 
-			graph[u].push_back ({ w, v} ) ; 
+			help.first = w; help.second = v; 
+			graph[u].push_back ( help ) ; 
 		}
 
 		// algorithm goes here
