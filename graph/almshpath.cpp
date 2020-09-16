@@ -1,10 +1,10 @@
 #include <stdio.h> 
-#include <iostream> 
 #include <queue> 
 #include <vector> 
 #include <utility> 
 
 #define MAXS 501
+#define MAXT 1000
 
 using namespace std ;
 
@@ -14,10 +14,10 @@ typedef priority_queue< pi, vector<pi>, greater<pi> > minQ;
 
 vii *graph = new vii [MAXS] , * revGraph = new vii [MAXS] ; 
 int cost[MAXS], parent[MAXS], rCost[MAXS], rParent[MAXS] ; 
-int resp[MAXS] ;
-minQ myQ; 
+int resp[MAXT] ;
 
 void dijkstra(int source, vii graph[], int cost[], int parent[]) { 
+	minQ myQ; 
 	pi dum, help, jj; 
 	cost[source] = 0 ; 
 	parent[source] = source; 
@@ -40,17 +40,6 @@ void dijkstra(int source, vii graph[], int cost[], int parent[]) {
 			}		
 		}
 	}
-}
-
-void reverse(int size) { 
-	int k = size;
-	pi help; 
-
-	while ( k -- )  
-		for (unsigned i=0; i<graph[k].size(); i++) {
-			help.first = graph[k][i].first; help.second = k; 
-			revGraph[ graph[k][i].second ].push_back (help); 
-		}
 }
 
 void delEdge (int u, int v ) { 
@@ -81,7 +70,6 @@ void delPath (int pivot) {
 
 int main() { 
 	int n, m, s, d , cnt = 0; 
-	pi help; 
 
 	while ( scanf("%d %d",&n, &m ) && n != 0 && m != 0 ) {
        		scanf("%d %d",  &s, &d) ; 
@@ -90,14 +78,18 @@ int main() {
 
 		int u,v, w; 
 		for (int i=0; i<m; i++) { 
+			pi help; 
 			scanf("%d %d %d",&u, &v, &w) ; 
 			help.first = w; help.second = v; 
 			graph[u].push_back ( help ) ; 
+
+			help.second = u; 
+			revGraph[v].push_back (help); 
+			
 		}
 
 		// algorithm goes here
 
-		reverse(n) ; 
 		dijkstra(s, graph, cost, parent) ; 
 		dijkstra(d, revGraph, rCost, rParent) ; 
 
@@ -110,10 +102,10 @@ int main() {
 		for(int i=0; i<n; i++) { cost[i] = MAXS ; parent[i] = -1; } 
 		dijkstra(s, graph, cost, parent) ;
 		
+		//
+
 		resp[cnt] = (cost[d] == -1 || cost[d] == MAXS)? -1 : cost[d] ; 
 
-		//
-		
 		for (int i=0 ;i<n ; i++) { graph[i].clear() ; revGraph[i].clear() ; } //cleanup 
 		cnt+=1 ;
 	}

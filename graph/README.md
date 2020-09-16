@@ -14,7 +14,12 @@ Graph classic (basic) problems:
 * http://www.spoj.com/problems/SAMER08A/ -- review
 * http://www.spoj.com/problems/DCEPC706/ -- review
 * http://www.spoj.com/problems/BUGLIFE/	-- done(cpp)
-* http://www.spoj.com/problems/ARBITRAG/
-* http://www.spoj.com/problems/TFRIENDS/
-* http://www.spoj.com/problems/CAPCITY/
+* http://www.spoj.com/problems/ARBITRAG/ -- done (cpp) 
+* http://www.spoj.com/problems/TFRIENDS/ -- done (cpp) 
+* http://www.spoj.com/problems/CAPCITY/ -- done (cpp) 
 * http://www.spoj.com/problems/WEBISL/
+
+Other cool ones :
+
+* https://www.spoj.com/problems/PT07Z/
+
