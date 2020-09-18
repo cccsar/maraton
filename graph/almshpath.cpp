@@ -3,8 +3,8 @@
 #include <vector> 
 #include <utility> 
 
-#define MAXS 501
-#define MAXT 1000
+#define MAXS 501 
+#define MAXT 10000000
 
 using namespace std ;
 

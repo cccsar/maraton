@@ -17,7 +17,7 @@ Graph classic (basic) problems:
 * http://www.spoj.com/problems/ARBITRAG/ -- done (cpp) 
 * http://www.spoj.com/problems/TFRIENDS/ -- done (cpp) 
 * http://www.spoj.com/problems/CAPCITY/ -- done (cpp) 
-* http://www.spoj.com/problems/WEBISL/
+* http://www.spoj.com/problems/WEBISL/ -- review ( SIGSEGV probably for memory ) 
 
 Other cool ones :
 
