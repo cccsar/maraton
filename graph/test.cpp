@@ -2,14 +2,16 @@
 #include<iostream> 
 #include<algorithm> 
 #include<set> 
+#include<map> 
+#include<queue> 
+#include<vector>
 
+#define MAXS 10000
 
 using namespace std;
 
 int main() { 
-	set<int> test; 
+	vector<int> hola = { 1, 2} ; 
 
-	for(int i=0 ;i<10; i++) test.insert(10-i); 
-
-	for(int el : test ) printf("%d ",el); 
+	printf("%d ",hola.back()) ;
 }

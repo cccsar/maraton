@@ -1,22 +1,22 @@
 #include <stdio.h> 
+#include <iostream> 
 #include <queue> 
 #include <vector> 
-#include <utility> 
 
 #define MAXS 501 
-#define MAXT 10000000
+#define MAXT 10000
 
 using namespace std ;
 
-typedef pair<int, int> pi ; 
+typedef pair<short int, short int> pi ; 
 typedef vector< pi > vii ; 
 typedef priority_queue< pi, vector<pi>, greater<pi> > minQ; 
 
 vii *graph = new vii [MAXS] , * revGraph = new vii [MAXS] ; 
-int cost[MAXS], parent[MAXS], rCost[MAXS], rParent[MAXS] ; 
+short int cost[MAXS], parent[MAXS], rCost[MAXS], rParent[MAXS] ; 
 int resp[MAXT] ;
 
-void dijkstra(int source, vii graph[], int cost[], int parent[]) { 
+void dijkstra(int source, vii graph[], short int cost[], short int parent[]) { 
 	minQ myQ; 
 	pi dum, help, jj; 
 	cost[source] = 0 ; 
@@ -28,6 +28,8 @@ void dijkstra(int source, vii graph[], int cost[], int parent[]) {
 	while ( !myQ.empty() ) { 
 		dum = myQ.top() ;
 		myQ.pop() ;
+
+		if ( dum.first > cost[dum.second]) continue; 
 
 		for(unsigned i=0; i<graph[dum.second].size() ; i++)  {
 			help = graph[dum.second][i] ; 
@@ -42,7 +44,7 @@ void dijkstra(int source, vii graph[], int cost[], int parent[]) {
 	}
 }
 
-void delEdge (int u, int v ) { 
+void delEdge (short int u, short int v ) { 
 	pi help ; 
 	
 	for(unsigned i=0; i<graph[u].size() ; i++ )
@@ -69,17 +71,17 @@ void delPath (int pivot) {
 }
 
 int main() { 
-	int n, m, s, d , cnt = 0; 
+	short int n, m, s, d , cnt = 0; 
 
-	while ( scanf("%d %d",&n, &m ) && n != 0 && m != 0 ) {
-       		scanf("%d %d",  &s, &d) ; 
+	while ( scanf("%hd %hd",&n, &m ) && n != 0 && m != 0 ) {
+       		scanf("%hd %hd",  &s, &d) ; 
 
-		for (int i=0 ;i<n ;i++) { cost[i] = rCost[i] = MAXS; parent[i] = rParent[i] = -1 ; } //init
+		for (short int i=0 ;i<n ;i++) { cost[i] = rCost[i] = MAXS; parent[i] = rParent[i] = -1 ; } //init
 
-		int u,v, w; 
-		for (int i=0; i<m; i++) { 
+		short int u,v, w; 
+		for (short int i=0; i<m; i++) { 
 			pi help; 
-			scanf("%d %d %d",&u, &v, &w) ; 
+			scanf("%hd %hd %hd",&u, &v, &w) ; 
 			help.first = w; help.second = v; 
 			graph[u].push_back ( help ) ; 
 
@@ -94,12 +96,13 @@ int main() {
 		dijkstra(d, revGraph, rCost, rParent) ; 
 
 
-		for(int i=0; i<n; i++)  
+		for(short int i=0; i<n; i++)  
 			if( cost[i] + rCost[i] == cost[d] ) 
 				delPath( i ) ; 
 			
 
-		for(int i=0; i<n; i++) { cost[i] = MAXS ; parent[i] = -1; } 
+		for(short int i=0; i<n; i++) { cost[i] = MAXS ; parent[i] = -1; } 
+
 		dijkstra(s, graph, cost, parent) ;
 		
 		//
@@ -110,6 +113,6 @@ int main() {
 		cnt+=1 ;
 	}
 
-	for(int i=0; i<cnt ; i++) printf("%d\n",resp[i]); 
+	for(short int i=0; i<cnt ; i++) printf("%d\n",resp[i]); 
 
 }
