@@ -26,7 +26,7 @@ typedef pair <int, pair<int, int> > pii;
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
 
-const int MAXINT = 2147483647;
+const int MAXINT = 0x7fffffff;  
 
 const int MAXN = 1000;
 int a[MAXN], b[MAXN]; 
@@ -78,16 +78,16 @@ int empanada(int n, const bool test) { //true is for a and false is for b
 
 int main() 
 {
-	int n, i_ , carne, queso;
+	int n, carne, queso;
 
-	for(i_=0; i_<MAXN ;i_++)  
-		dp[0][i_] = dp[1][i_] = -1 ;
+	for(int i=0; i<MAXN ;i++)  
+		dp[0][i] = dp[1][i] = -1 ;
 
 	ri(n); 
-	for(i_=0; i_<n ;i_++)  
-		ri(a[i_]); 		
-	for(i_=0; i_<n ;i_++)  
-		ri(b[i_]); 		
+	for(int i=0; i<n ;i++)  
+		ri(a[i]); 		
+	for(int i=0; i<n ;i++)  
+		ri(b[i]); 		
 
 	carne = empanada(n-1, true); 
 	queso = empanada(n-1, false); 
