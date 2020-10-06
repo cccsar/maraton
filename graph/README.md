@@ -12,14 +12,14 @@ Graph classic (basic) problems:
 * https://icpcarchive.ecs.baylor.edu/index.php?option=onlinejudge&page=show_problem&problem=4897 -- review
 * http://www.spoj.com/problems/INCARDS/	-- done(cpp); 
 * http://www.spoj.com/problems/SAMER08A/ -- review
-* http://www.spoj.com/problems/DCEPC706/ -- review
+* http://www.spoj.com/problems/DCEPC706/ -- done (cpp) 
 * http://www.spoj.com/problems/BUGLIFE/	-- done(cpp)
 * http://www.spoj.com/problems/ARBITRAG/ -- done (cpp) 
 * http://www.spoj.com/problems/TFRIENDS/ -- done (cpp) 
 * http://www.spoj.com/problems/CAPCITY/ -- done (cpp) 
-* http://www.spoj.com/problems/WEBISL/ -- review ( SIGSEGV probably for memory ) 
+* http://www.spoj.com/problems/WEBISL/ -- done (cpp) 
 
 Other cool ones :
 
 * https://www.spoj.com/problems/PT07Z/
-
+* https://codeforces.com/problemset/problem/160/D

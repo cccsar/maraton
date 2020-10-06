@@ -26,11 +26,11 @@ typedef pair <int, pair<int, int> > pii;
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
 
-const int MAXINT = 2147483647;
+const int MAXINT = 0x7fffffff;
 
 
-const int MAXS = 200; 
-const int MAXT = 10;
+const int MAXS = 202; 
+const int MAXT = 11;
 
 int resp[MAXT]; 
 
@@ -45,7 +45,7 @@ void getSucc(vii &succ, int x, int y, int width, int height ) {
 		succ.push_back( {x, y+1} ); 
 }
 
-void bfsCost(int cost[][MAXS+1], char plot[][MAXS+1], int i, int j, int width, int height) { 
+void bfsCost(int cost[][MAXS], char plot[][MAXS], int i, int j, int width, int height) { 
 	queue<pi> kiu; 
 	vii succ; 
 	pi help, uwu;
@@ -76,56 +76,61 @@ void bfsCost(int cost[][MAXS+1], char plot[][MAXS+1], int i, int j, int width, i
 
 int main() 
 {
-	int t, n, m, i_, j_, k_; 
-	int cost_a[MAXS+1][MAXS+1], cost_b[MAXS+1][MAXS+1], cost_c[MAXS+1][MAXS+1];	
-	char graph[MAXS+1][MAXS+1], word[MAXS];
+	int t, n, m; 
+	int cost_a[MAXS][MAXS], cost_b[MAXS][MAXS], cost_c[MAXS][MAXS];	
+	char graph[MAXS][MAXS], word[MAXS];
 	vii begins; 
 
 
-	for(i_=0; i_<=MAXS; i_++) {		//init structures
-		for(j_=0; j_<=MAXS; j_++)  {
-			graph[i_][j_] = '.';
-			cost_a[i_][j_] = cost_b[i_][j_] = cost_c[i_][j_] = MAXINT;  
+	for(int i=0; i<MAXS; i++) {		//init 
+		for(int j=0; j<MAXS; j++)  {
+			graph[i][j] = '.';
+			cost_a[i][j] = cost_b[i][j] = cost_c[i][j] = MAXINT;  
 		}
 	}
 
 	ri(t); 
 
-	for(i_=0; i_<t ; i_++) {
+	for(int i=0; i<t ; i++) {
+
 		rii(n,m); 
-		for(j_=1; j_<=n ; j_++) {
+
+		for(int j=1; j<=n ; j++) {
 			scanf("%s",word); 
-			for(k_=1; k_<=m ; k_++) {
-				graph[j_][k_] = word[k_-1]; 
+
+			for(int k=1; k<=m ; k++) {
+				graph[j][k] = word[k-1]; 
 				
 				//if not a '.' or a '#', consider it a begin
-				if( graph[j_][k_] > '0' && graph[j_][k_] < '4' )
-					begins.push_back( {j_, k_} ); 
+				if( graph[j][k] > '0' && graph[j][k] < '4' )
+					begins.push_back( {j, k} ); 
 			}
 		}	
 
+		// algorithm 
 
 		bfsCost(cost_a, graph, begins[0].first, begins[0].second, n, m); 
 		bfsCost(cost_b, graph, begins[1].first, begins[1].second, n, m); 
 		bfsCost(cost_c, graph, begins[2].first, begins[2].second, n, m); 
 		
 		int help, less = MAXINT; 
-		for(j_=0; j_<n+1 ; j_++) {
-			for(k_=0; k_<m+1 ; k_++) {
-				help = max( cost_a[j_][k_], max(cost_b[j_][k_], cost_c[j_][k_]) ); 
+		for(int j=0; j<=n+1 ; j++) {
+			for(int k=0; k<=m+1 ; k++) {
+				help = max( cost_a[j][k], max(cost_b[j][k], cost_c[j][k]) ); 
 
-				if ( graph[j_][k_] != '#' && less > help) 
+				if ( graph[j][k] != '#' && help < less) 
 					less = help ;
 			}
 		}	
 		
+		//
 
-		resp[i_] = less; 
+		resp[i] = less; 
 
-		for(j_=0; j_<=n+1 ; j_++) { //clearing memory
-			for(k_=0; k_<=m+1 ; k_++) {
-				graph[j_][k_] = '.';
-				cost_a[j_][k_] = cost_b[j_][k_] = cost_c[j_][k_] = MAXINT;  
+		for(int j=0; j<=n+1 ; j++) { //clean
+			for(int k=0; k<=m+1 ; k++) {
+				graph[j][k] = '.';
+				cost_a[j][k] = cost_b[j][k] = cost_c[j][k] = MAXINT;  
 			}
 		}	
 
@@ -133,7 +138,7 @@ int main()
 
 	}	
 
-	for(i_=0; i_<t ; i_++) cout<<resp[i_]<<endl; 	
+	for(int i=0; i<t ; i++) cout<<resp[i]<<endl; 	
 
 	return 0; 
 }

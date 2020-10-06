@@ -51,6 +51,7 @@ void delEdge (short int u, short int v ) {
 		if ( graph[u][i].second == v ) { 
 			help.first = graph[u][i].first; help.second = -1 ; // representative elimination
 			graph[u][i] = help  ; 
+			break ;
 		}
 			
 }
