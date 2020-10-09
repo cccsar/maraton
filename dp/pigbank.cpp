@@ -2,6 +2,8 @@
 #include<iostream> 
 #include<utility> 
 #include<algorithm> 
+#include<vector> 
+
 
 #define MAXINT 0x7fffffff
 #define MAXN 500
@@ -12,17 +14,17 @@
 using namespace std; 
 
 typedef pair<int, int> pi ; 
-typedef vector<pi> vi; 
+typedef vector<pi> vii; 
 
-vi wc ; 
-int dp[2][MAXN][MAXW]; // memory
+vii wc ; 
+int dp[2][MAXW][MAXN]; // memory
 int resp[MAXT] ; 
 
-pi foo (int p, int ind ) { 
+pi  foo (int p, int ind ) { //not a solution of the problem
 	int quot = p / wc[ind].first; 
+	int rem = p % wc[ind].first; // is it always p >= wc[ind].first == true ?? 
 	int tot = quot * wc[ind].second; 
 	int ix = 0;
-	int rem = p % wc[ind].first; // is it always p >= wc[ind].first == true ?? 
 	pi rep = { MAXINT, MAXINT } ; 
 
 	while ( wc[ix].first <= rem ) {
@@ -36,11 +38,11 @@ pi foo (int p, int ind ) {
 	return { tot + rep.first, quot*wc[ind].first + rep.second } ;  
 }
 
-pi wubba(int p, int ind) { // Supposedly memo enhacement
+pi wubba(int p, int ind) { // it does produces a time enhacement of solution according to judge
 	int quot = p / wc[ind].first ; 
-	int tot = quot * wc[ind].second;  //###
-	pi rep = {MAXINT, MAXINT } , help ; 
 	int rem = p % wc[ind].first ; 
+	int tot = quot * wc[ind].second;  
+	pi rep = {MAXINT, MAXINT } , help ; 
 	int ix = 0; 
 
 	while ( wc[ix].first <= rem ) { 
@@ -72,10 +74,10 @@ int main() {
 
 		scanf("%d", &n); 
 
-		for(int i=0 ;i<2; i++) 
-			for(int j=0; j<p ;j++) 
-				for(int k=0; k<n; k++) 
-					dp[i][j][k] = -1; 
+//		for(int i=0 ;i<2; i++) 
+//			for(int j=0; j<p ;j++) 
+//				for(int k=0; k<n; k++) 
+//					dp[i][j][k] = -1; 
 
 		for(int i=0; i<n; i++) { 
 			scanf("%d %d",&c, &w); 
@@ -87,16 +89,17 @@ int main() {
 
 		sort(wc.begin(), wc.end()); 
 
-		pi menor = { MAXINT, MAXINT }; 
-		pi test; 
+		pi  menor = { MAXINT, MAXINT }; 
+		pi  test; 
 		for(int i=0; i<n; i++){
 			test = foo (p, i); 	
 //			printf("%d %d\n",test.first, test.second); 
-		       	menor = min( menor, test ); 
+			if ( test.second == p ) 
+			       	menor = min( menor, test ); 
 		}
 //		printf("\n"); 
 
-		resp[t-k-1] = (menor.second == p)? menor.first : -1; 
+		resp[t-k-1] = (menor.first == MAXINT)? -1 : menor.first; 
 //		printf("%d %d\n",menor.first, menor.second ); 
 //		printf("\n\n"); 
 
