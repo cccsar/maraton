@@ -31,17 +31,9 @@ typedef pair <int, pair<int, int> > pii;
 typedef vector< vi > adl; 
 typedef vector< vii > wadl; 
 	
-#define MAXSIZE 10000
+#define MAXINT 0x7fffffff
 
 int main() { 
-<<<<<<< HEAD
-	unordered_set<int> hola; 
-
-	return 0; 
-	a;sdlfkj;asdkl
-=======
->>>>>>> df23937cd53faa0114f94c70b9d3dcb96f2c4299
-
-	
-	printf("%ld \n%ld\n", sizeof(int), sizeof(long));
+	long double k ;
+	printf("%d\n",MAXINT); 
 }
