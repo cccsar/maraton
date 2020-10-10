@@ -1,3 +1,7 @@
+/*
+ * https://codeforces.com/contest/1324/problem/F
+ * cccsar
+ */
 #include<stdio.h> 
 #include<iostream> 
 #include<vector> 
