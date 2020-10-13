@@ -34,6 +34,6 @@ typedef vector< vii > wadl;
 #define MAXINT 0x7fffffff
 
 int main() { 
-	long double k ;
-	printf("%d\n",MAXINT); 
+	int k = 5; 
+	cout<< ~true == false <<endl; 
 }
