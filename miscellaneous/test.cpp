@@ -35,5 +35,5 @@ typedef vector< vii > wadl;
 
 int main() { 
 	int k = 5; 
-	cout<< ~true == false <<endl; 
+	cout<< k/2 -1 <<endl ; 
 }
