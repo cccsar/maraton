@@ -1,3 +1,8 @@
+/*
+ * https://codeforces.com/problemset/problem/380/C
+ * cccsar
+ */
+
 #include<iostream> 
 #include<stdio.h> 
 #include<stack> 
@@ -33,18 +38,18 @@ int espBs (int el, int p, int q ) {
 
 int qry(int i, int j , int size) { 
 	int x = espBs(i, 0, size), y = espBs(j, 0, size) ;
-	cout<<"i: "<<i<<" x: "<<x<<" j: "<<j<<" y: "<<y<<endl;
 
-	if ( rng[x].first != i ) // since bs returns "lb" when search fails (??) turn into "ub"
+	if ( rng[x].first != i && x + 1 < y ) // since bs returns "lb" when search fails (??) turn into "ub"
 		x += 1; 
 
-	int cnt = y-x; 
+	int cnt = 0;  
 	
-	for(int k=x; k<y; k++) 
-		if ( rng[k].second > j ) 
-			cnt -=1 ;
+	for(int k=x; k<=y; k++) // this counting causes TLE
+		if ( rng[k].first >= i && rng[k].second <= j ) 
+			cnt +=1 ;
 	return cnt ; 
-}
+} 
+
 
 int main() { 
 	int n, m; 
@@ -53,6 +58,7 @@ int main() {
 
 	n = strlen(wd);
 
+	// agh
 	pts.push({ wd[0], 0 } ); 
 
 	for(int i=1; i<n; i++) {
@@ -68,20 +74,14 @@ int main() {
 
 	sort( rng.begin(), rng.end() ) ; 
 
-	for(pair<int, int> el : rng ) 
-		cout<<el.first<<" "<<el.second<<endl; 
-
-
 	cin >> m ;
 
 	int k = m , u, v; 
 	while ( k -- ) { 
 		cin >> u>> v; 
-		resp[ m-k-1 ] = qry(u-1, v-1 , n-1) ; 	
+		resp[ m-k-1 ] = 2*qry(u-1, v-1 ,rng.size()-1) ; 	
 	}		
+	//
 
 	for(int i=0 ;i<m; i++) cout<<resp[i]<<endl; 
-
-
-//	cout<<espBs(4,0, rng.size() )<<endl ; 
 }
