@@ -1,124 +1,79 @@
-#include<iostream> 
 #include<stdio.h> 
-#include<math.h> 
+#include<iostream> 
 #include<vector> 
-#include<utility> 
+#include<math.h> 
 
 using namespace std; 
 
-const int MAXN = 100000; 
-const int MAXEXP = 1<<(ilogb(MAXN) + 2) ;
-const int MAXINT = 0x7fffffff;
+const int MAXN = 100000;
+const int MAXST = 1<<(ilogb(MAXN) + 1); 
 
-int a[MAXEXP]  ; 
-vector<int> resp; 
+int arr[MAXN] ; 
+int st[MAXST] ; 
+int resp[MAXN]; 
 
-void build(int size) { // receives best fit for n
-	for(int k = size ; k > 0 ; k--)  
-		for(int i = (1<<k) - 1 ; i < (1<<(k+1)) - 1; i += 2) 
-			a[ (i-1)/2 ] = max(a[i], a[i+1]); 
-}
+int buildSt(int ind, int p, int q){
+	int sz = q - p ; 
 
-void upd(int ind) {
-	if ( ind > 0 ) { 
-		a[ (ind-1)/2 ] = (ind%2 == 0 ) ? max(a[ind-1], a[ind]) : max(a[ind],a[ind+1]); 
-		upd( (ind-1)/2 ); 
+	if ( sz > 0 )  
+		return st[ind] = max(buildSt( 2*(ind+1)-1, p, p + sz/2) ,buildSt( 2*(ind+1), p + sz/2 + 1,q )); 
+
+	return st[ind] = arr[p]; 
+} 
+
+int updSt(int curr, int ind, int el, int p, int q) {
+	int sz = q-p; 
+
+	if ( sz > 0) {  
+		if ( ind <= p + sz/2 ) // left son update
+			return st[curr] = max(updSt( 2*(curr+1)-1,ind,el, p, p+sz/2) , st[ 2*(ind+1) ]); 
+		return st[curr] = max(st[ 2*(curr+1)-1 ] , updSt( 2*(curr+1), ind, el, p + sz/2 +1, q)); 
 	}	
-}  
 
-void chg(int ind, int el , int size) { // receives best fit for n 
-	int pos = (1<<size) - 1 + ind ; 
-
-	a[ pos ]  = el ;
-	upd( pos ) ; 
+	return st[curr] = arr[ind] = el ;
 }
 
-pair<int, int>  segment(int u, int v, int exp) { // receives best fit for n
-	int i = (1<<exp) - 1 + u, j = (1<<exp) - 1 + v ; 
-	int mx , current = i, cc, imp, ind, pp, rec; 
+int segLookup(int curr, int p, int q, int i, int j ) { 
+	if ( p > q ) 
+		return -1; 
 
-	mx = a[i], pp = i;   // keep record of maximum index on tree
+	if ( i == p && j == q ) 
+		return st[curr]; 
 
-	if ( a[i] % 2 ==0 ) 
-		current +=1 ;
+	int sz = q-p ; 
+	return max ( segLookup( 2*(curr+1) -1, p, q +sz/2, i, min (j, p + sz/2) ) ,
+		segLookup( 2*(curr+1), p +sz/2 + 1, q, max( i  , p + sz/2+1) , j) ) ; 
+}	
 
-	while ( current < j ) { 
-		ind = rec = current, cc = 0, imp = a[current]; 
-
-		while ( ind % 2 == 1 && current + (1<<cc) < j ) { 
-		
-			imp = a[ (ind-1)/2 ]  ;
-			rec = ind ; // ###
-
-			ind = (ind-1)/2; 
-			cc +=1; 
-		}
-
-		current += (ind != current) ? 1<<(cc-1) : 1; 
-
-		if ( imp > mx ) { 
-			mx = imp; 
-			pp = rec; 	// ###
-		}
-
-		mx = max(mx, imp ); 
-	}
-
-	if ( a[j] > mx ) { 
-		mx = a[j]; 
-		pp = j; // ###
-	}
-
-	return {mx, pp } ; 
-}
-
-int findLeave(int ind , int exp) { // receives best fit for n
-	while ( (ind +1)*2 - 1 < (1<<(exp+1)) - 1 )  
-		ind = (ind + 1) * 2 - 1 ;
-
-	return ind - ((1<<exp)-1);  
-}
 
 int main() { 
-	int n, exp, q, u, v; 
-	char let; 
+	int n,m; 
 
 	cin >> n; 
 
-	exp = ilogb(n) + 1 ; // this is the power of 2 in wich n fit, (1<<(exp + 1)) - 1 is size of the heap 
+	int hsz = ilogb(n) + 1; 
 
-	for(int i= (1<<exp) - 1 ;i< (1<<(exp+1)) - 1; i++)  	// get leaves
-		if ( i < (1<<exp) - 1 + n) 
-			cin >> a[i] ; 
-		else
-			a[i] = -1; 
+	for(int i=0 ;i<n; i++) cin>> arr[i]; 
 
-	// agh
-	build(exp); 						// build segtree
+	buildSt(0, 0, n-1) ; 
 
-	cin >> q ;
+	for(int i=0 ;i<(1<<(hsz+1)) + 1; i++) cout<<st[i]<<" "; 
+	cout<<endl; 
 
-	int t = q;  
+	cout<<segLookup(0,1,2,0,n-1)<<endl; 
 
-	pair<int, int> fst, snd; 
-	int son; 
-	while ( t-- ) { 					// answer queries
-		cin >> let >> u >> v; 
-		if ( let == 'Q' ) {
-			fst = segment( u-1, v-1, exp ) ; 	// find max and index
-			son = findLeave (fst.second, exp ) ;	// find actual max index 
-
-			chg ( son,  -1 , exp ); 		// change index entry 
-			snd = segment ( u-1, v-1 , exp ) ; 	// find second max
-			chg( son, fst.first, exp ) ; 		// restablish index 
-
-
-			resp.push_back( fst.first + snd.first ) ; 
-		}
-		else 
-			chg(u-1, v, exp ); 
-	}
-	// 
-	
-	for(int el : resp ) cout<<el<<endl; 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
