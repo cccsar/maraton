@@ -94,7 +94,7 @@ http://www.spoj.com/problems/WEBISL/
 /-- Other lists --/
 
 
-http://www.spoj.com/problems/KGSS/ 			TLE (for search and queu imp, probably have to deduce segment tree)
+http://www.spoj.com/problems/KGSS/ 			donce (cpp)
 http://www.spoj.com/problems/GSS1/
 http://www.spoj.com/problems/GSS3/
 
