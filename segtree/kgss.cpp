@@ -34,14 +34,14 @@ int updSt(int curr, int ind, int el, int p, int q) {
 }
 
 int segLookup(int curr, int p, int q, int i, int j ) { 
-	if ( p > q ) 
+	if ( i > j ) 
 		return -1; 
 
 	if ( i == p && j == q ) 
 		return st[curr]; 
 
 	int sz = q-p ; 
-	return max ( segLookup( 2*(curr+1) -1, p, q +sz/2, i, min (j, p + sz/2) ) ,
+	return max ( segLookup( 2*(curr+1) -1, p, p +sz/2, i, min (j, p + sz/2) ) ,
 		segLookup( 2*(curr+1), p +sz/2 + 1, q, max( i  , p + sz/2+1) , j) ) ; 
 }	
 
@@ -57,11 +57,19 @@ int main() {
 
 	buildSt(0, 0, n-1) ; 
 
-	for(int i=0 ;i<(1<<(hsz+1)) + 1; i++) cout<<st[i]<<" "; 
-	cout<<endl; 
+//	for(int i=0 ;i<(1<<(hsz+1)) + 1; i++) cout<<st[i]<<" "; 
+//	cout<<endl; 
 
-	cout<<segLookup(0,1,2,0,n-1)<<endl; 
-
+	cin >> m ; 
+	char let; 
+	int u, v, a, b; 
+	for (int i=0 ;i<m; i++) { 
+		cin >>let>>u>>v; 
+		if ( let == 'Q' ){
+		}
+		else  
+			resp[i] = updSt(0, u-1, v-1, 0, n-1) ; 
+	}
 }
 
 
