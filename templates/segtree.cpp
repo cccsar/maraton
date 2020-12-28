@@ -36,7 +36,7 @@ int updSt(int i, int ind, int e, int p, int q) {
 
 int querySt(int curr, int i, int j, int p , int q ){ 
 
-	if (p<q) 
+	if (j<i) 
 		return 0 ; 
 
 	if (i==p && j==q)
@@ -44,25 +44,8 @@ int querySt(int curr, int i, int j, int p , int q ){
 
  	int sz = q-p; 
 
-	return foo ( querySt( 2*(i+1)-1, i, min(j,p+sz/2), p, p+sz/2), querySt( 2*(i+1), max(i, p+sz/2+1), j, p+sz/2+1, q) ); 
+	return foo ( querySt( 2*(curr+1)-1, i, min(j,p+sz/2), p, p+sz/2) 
+	           , querySt( 2*(curr+1), max(i, p+sz/2+1), j, p+sz/2+1, q) ); 
 
-} // check this out
-
-int main(){ 
-	int n; 
-
-	cin >> n; 
-
-	for(int i=0 ;i<n; i++)  
-		cin >> arr[i]; 
-
-	buildSt(0, 0, n-1) ; 
-
-	for(int i=0 ;i<4*n; i++) cout<<st[i]<<" ";
-	cout<<endl; 
-
-	updSt(0, 4, 5,0,n-1); 
-	
-	for(int i=0 ;i<4*n; i++) cout<<st[i]<<" ";
-	cout<<endl; 
-}
+} // The choice for a (possible) new search interval on each bifurcation
+  // is to adjust the query segment to the way segments are on the st
