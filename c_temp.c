@@ -26,7 +26,6 @@ int main (int argc, char **argv) {
 	perro = (int*) realloc( perro, sizeof(int) * 100000); 
 	printf("%p \n",perro); 
 
-
 	return 0; 
 }
 
