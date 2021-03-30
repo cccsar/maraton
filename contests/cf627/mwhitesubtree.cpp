@@ -1,119 +1,88 @@
 /*
  * https://codeforces.com/contest/1324/problem/F
- * cccsar
+ * Maximum white subtree
  */
-#include<stdio.h> 
+#include<stdio.h>
 #include<iostream> 
-#include<vector> 
-#include<set> 
+#include<vector>
+#include<stack> 
+#include<queue> 
+#include<algorithm> 
 
 using namespace std; 
 
-const int MAXN = 2*200000; 
+int uwu; 
 
-bool color[MAXN];
-int backt[2][MAXN], post[2][MAXN], parent[2][MAXN] ,diag[2][MAXN] ; 
-set<int> *atree = new set<int> [MAXN], *btree = new set<int> [MAXN] ;
+#define FOR(i,lb,ub) for(int i=lb ; i<ub ; ++i)
+#define ROF(i,ub,lb) for(int i=ub ; i>lb ; --i) 
+#define pb(el)  push_back(el) 
+#define ri(i) uwu = scanf("%d",&i)
+#define rii(i,j) uwu = scanf("%d %d", &i, &j) 
+#define rl(l) uwu = scanf("%lld",&l)
+#define rll(l,m) uwu = scanf("%lld %lld",&l, &m) 
 
+const int MAXI = 0x7fffffff;
 
-int dfsRec(int source, int dg, int ind, set<int> *&tree) { 
-	int pp = parent[ind][source];
+typedef pair<int, int> pi ; 
+typedef pair<int, pi> pii; 
+typedef vector<long long> vl; 
+typedef vector<char> vc; 
+typedef vector<bool> vb; 
+typedef vector<int> vi; 
+typedef vector<pi> vii; 
 
-	if ( color[source] ) 
-		backt[ind][source] = backt[ind][ pp ] + 1;  
-	else 
-		backt[ind][source] = (backt[ind][ pp ] > 1)? backt[ind][ pp ] - 1: 0; 
+//GC
 
-	if ( !color[ pp ] && !color[source]  ) {
-		if ( diag[ind][ pp ] + dg > 1 ) 
-			diag[ind][source] = diag[ind][ pp ] + dg - 1;
-		else 	
-			diag[ind][source] = 0; 
-	}
-	else 
-		diag[ind][source] = diag[ind][ pp ] + dg ;
+const int MAXS = 200000; 
 
-	int help = 0; 
-	int curr; 
-	for(int el : tree[source]) { 
-		curr = (ind == 0)? el : -el ; 
-		if ( parent[ind][curr] == -1 ) { 
-			parent[ind][curr] = source; 
-			help += dfsRec(curr, help, ind, tree); 
-		}
-	}
+vi *tree = new vi[MAXS]; 
+int parent[2][MAXS], dp[2][MAXS], color[MAXS]; 
 
-	post[ind][source] = help ;  
+int dfs_prev(int r) { 
+    int acc = 0; 
 
-	return (color[source])? post[ind][source] + 1 : (post[ind][source] > 1)? post[ind][source] -1 : 0;    
-} 
+    for(auto son : tree[r]) 
+        if (parent[0][son] == -1 ) { parent[0][son] = r; acc += dfs_prev( son ) ; }
+
+    int xd = color[r] ? 1 : -1, xp = xd + acc; 
+
+    if(xp >= 0) { dp[0][r] = xp;  return xp ; }
+
+    dp[0][r] = -1; return 0; 
+}
+
+void dfs_post(int r) { 
+    if ( dp[0][r] != -1 ) // if it wasn't ignored result is maximum between routing in parent or in current
+        dp[1][r] = max( dp[0][r], dp[1][parent[0][r]] ) ; 
+    else                 // it was ignored result depends on wether parent result can make current better
+        dp[1][r] = (dp[1][parent[0][r]] > 0) ? dp[1][parent[0][r]] - 1 : -1 ;  
+
+    for(auto son: tree[r]) 
+        if (parent[1][son] == -1) { 
+            parent[1][son] = r; 
+            dfs_post(son) ; 
+        }
+}
 
 int main() { 
-	int n, u, v, e , beg;
+   int n, u, v ;
 
-	cin >> n; 
+   ri(n); 
 
-	for(int i=0 ;i<n; i++)   // init
-		parent[0][i] = parent[1][i] = -1 ; 
-	
-	beg = -1; 
-	for(int i=0; i<n; i++) { 
-		cin >> e; 
-		if (e) { 
-			color[i] = true; 
-			beg = i; 
-		}
-		else 
-			color[i] = false; 
-	}	
+   FOR(i,0,n)  parent[0][i] = parent[1][i] = -1; 
 
-	for(int i=0 ;i<n-1;  i++) { 
-		cin >> u >> v;
-		atree[u-1].insert( v-1 )    , atree[v-1].insert( u-1)  ;
-		btree[u-1].insert( -(v-1) ) , btree[v-1].insert( -(u-1) ) ;
-	}
+   FOR(i,0,n) ri(color[i]) ; 
+   FOR(i,0,n-1) { 
+       rii(u,v) ; 
+       tree[u-1].pb(v-1); 
+       tree[v-1].pb(u-1); 
+   }
 
+   parent[0][0] = parent[1][0] = 0; 
+   dfs_prev(0); 
 
-	if ( beg == -1) {
-		for(int i=0 ;i<n; i++) cout<<0<<" "; 
-		cout<<endl; 
-	}
-	else { 
-		parent[0][beg] = beg; 
-		backt[0][beg] = diag[0][beg] = 0; 
-		dfsRec(beg, 0, 0, atree); 
+   dfs_post(0); 
 
-		parent[1][beg] = beg; 
-		backt[1][beg] = diag[1][beg] = 0; 
-		dfsRec(beg, 0, 1, btree); 
-
-		for(int i=0; i<n; i++) cout<<backt[0][i]<<" "; 
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<post[0][i]<<" "; 
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<diag[0][i]<<" "; 
-		cout<<endl; 
-
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<backt[1][i]<<" "; 
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<post[1][i]<<" "; 
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<diag[1][i]<<" "; 
-		cout<<endl; 
-
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<parent[0][i]<<" "; 
-		cout<<endl; 
-		for(int i=0; i<n; i++) cout<<parent[1][i]<<" "; 
-		cout<<endl; 
-		cout<<endl; 
-
-		for(int i=0 ;i<n; i++) cout<< backt[0][i] + post[0][i] + diag[0][i] + diag[1][i]<<" ";
-		cout<<endl; 
-	}
-
-
-
-
+   FOR(i,0,n) printf("%d ",dp[1][i] ); 
+   printf("\n"); 
 }

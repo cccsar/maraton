@@ -40,7 +40,9 @@ http://www.spoj.com/problems/SCUBADIV/
 
 http://www.spoj.com/problems/SOLDIER/
 
+https://www.spoj.com/problems/LCS/
 http://www.spoj.com/problems/EDIST/
+
 https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=467 (EDIT DISTANCE + reconstruir la solucion)
 
 http://www.spoj.com/problems/ANARC05H/
@@ -110,11 +112,7 @@ http://www.spoj.com/problems/HELPBOB/
 
 /-- personal --/ 
 
-https://www.spoj.com/problems/PRIME1/ 			TLE (segmentation fault) 
-http://codeforces.com/problemset/problem/1186/C		vus the cossack and strings - TLE (needs sme fucking savant refinement)
-http://codeforces.com/problemset/problem/1189/B		Number Circle
 http://codeforces.com/problemset/problem/1189/A		Keanu Reeves 	- done(cpp)
 http://codeforces.com/problemset/problem/1023/B		pair of toys 	- done(cpp)
 http://codeforces.com/contest/1066/problem/C		books queries	- done(cpp)
 https://www.spoj.com/problems/KNAPSACK/			WA - needs better dp approach (both greedy, and pushing maximum failed)
-https://www.spoj.com/problems/LCS/
